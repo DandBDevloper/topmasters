@@ -25,7 +25,7 @@ const DownloadBrochure = ({ image, title, developer }) => {
             <div className="brochureImage">
 
               <Image src='https://enquiries.estate/communities/dubai-hills-estate/images/brochure.webp' alt="An example responsive image"
-                layout="responsive" // Makes the image responsive
+                layout="fill" // Makes the image responsive
                 width={400} // Native width of the image in pixels
                 height={300} // Native height of the image in pixels
                 priority />

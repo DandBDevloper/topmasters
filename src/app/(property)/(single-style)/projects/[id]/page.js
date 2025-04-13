@@ -97,7 +97,7 @@ export default async function ProjectV1({ params }) {
 
       <div className="container customPaddingProjectAbout">
         <div className="aboutSection">
-          <div className="aboutDetails">
+          <div className="aboutDetails flex-start">
             <h1>{projectData.Full.name} by {projectData.Full.developer_name}</h1>
             <div className="listitems">
               <div className="DetailsList">

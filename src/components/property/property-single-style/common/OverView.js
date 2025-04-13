@@ -54,6 +54,7 @@ const OverView = ({amenities}) => {
               alt={`${item.name} icon`} 
               width={25}        // specify appropriate width
               height={25}       // specify appropriate height
+              layout="fill"
               className="icon projectAmenitiesIcon"  // your custom styling
             />
             <div className="ml15">

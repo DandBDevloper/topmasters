@@ -90,7 +90,7 @@ const FeaturedListings = () => {
                       {/* <a href="#">
                         <span className="flaticon-mobile" />
                       </a> */}
-                      <a class="far fa-phone"></a>
+                      <a className="far fa-phone"></a>
                     </div>
                   </div>
                 </div>

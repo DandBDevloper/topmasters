@@ -14,7 +14,7 @@ const ProjectHero = ({ image, title, developer }) => {
           <Image 
             src={imageUrl} 
             alt="Project Hero" 
-            fill // Enables full-width and height
+            layout="fill" // Enables full-width and height
             className="HeroImg"
             style={{ objectFit: 'cover' }}
             priority={true}
