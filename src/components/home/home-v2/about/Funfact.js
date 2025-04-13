@@ -41,7 +41,7 @@ const Funfact = () => {
             Invest in the Future of Dubai
             </h2>
             <p className="text mb25 fz15">
-            Dubai is synonymous with innovation and glamour. Discover prime investment opportunities—from ultra-modern high-rises in the heart of the city to serene waterfront properties. Our expert market analysis and local insights help you make informed decisions that secure your future in one of the world’s most dynamic property markets.
+            Dubai is synonymous with innovation and glamour. Discover prime investment opportunities—from ultra-modern high-rises in the heart of the city to serene waterfront properties. Our expert market analysis and local insights help you make informed decisions that secure your future in one of the worlds most dynamic property markets.
             </p>
             <div className="list-style1 mb50">
               <ul>

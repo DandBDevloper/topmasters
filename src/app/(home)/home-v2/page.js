@@ -69,7 +69,7 @@ const Home_V2 = () => {
               <div className="main-title2">
                 <h2 className="title">New Off-Plan Properties for Sale in Dubai</h2>
                 <p className="paragraph">
-                Here's what our property experts are loving right now
+                Here is what our property experts are loving right now
                 </p>
               </div>
             </div>
@@ -281,7 +281,7 @@ const Home_V2 = () => {
           <div className="row">
             <div className="col-lg-12 wow fadeInUp" data-wow-delay="100">
               <div className="main-title text-center">
-                <h6>Trusted by the world's best</h6>
+                <h6>Trusted by the worlds best</h6>
               </div>
             </div>
             {/* End .col-12 */}

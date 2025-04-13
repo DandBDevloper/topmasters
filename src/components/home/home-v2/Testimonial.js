@@ -12,7 +12,7 @@ const testimonials = [
   {
     id: "2nd",
     imageSrc: "/images/testimonials/testi-2.png",
-    text: "Another fantastic testimonial! This workshop has helped me improve my design skills significantly. I'm really grateful for the opportunity.",
+    text: "Another fantastic testimonial! This workshop has helped me improve my design skills significantly. Im really grateful for the opportunity.",
     name: "Ella Johnson",
     designation: "UX Designer, Google",
   },
@@ -26,14 +26,14 @@ const testimonials = [
   {
     id: "4th",
     imageSrc: "/images/testimonials/testi-4.png",
-    text: "Another fantastic testimonial! This workshop has helped me improve my design skills significantly. I'm really grateful for the opportunity.",
+    text: "Another fantastic testimonial! This workshop has helped me improve my design skills significantly. Im really grateful for the opportunity.",
     name: "Ella Johnson",
     designation: "UX Designer, Google",
   },
   {
     id: "5th",
     imageSrc: "/images/testimonials/testi-5.png",
-    text: "Another fantastic testimonial! This workshop has helped me improve my design skills significantly. I'm really grateful for the opportunity.",
+    text: "Another fantastic testimonial! This workshop has helped me improve my design skills significantly. Im really grateful for the opportunity.",
     name: "Ella Johnson",
     designation: "UX Designer, Google",
   },

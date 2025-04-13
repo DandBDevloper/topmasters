@@ -10,7 +10,7 @@ const Hero = () => {
           Find Your Dream Home
         </h2>
         <p className="hero-text fz15" data-aos="fade-up" data-aos-delay="250">
-          Let's find a home that's perfect for you
+          Lets find a home thats perfect for you
         </p>
 
         <HeroContent />
