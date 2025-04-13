@@ -28,22 +28,6 @@ const ProjectHero = ({ image, title, developer }) => {
                 <h2 className=" animate-up-2">{title}</h2>
                 <p >by {developer}</p>
                 <p className="mb-4">Studio, 1 - 3 Apartments</p>
-                {/* <div class="container sellingContainer">
-                    <div class="row text-center py-4 w-100 sellingContent">
-                        <div class="sellingPointItems">
-                            <p class="mainHeading">Freehold</p>
-                            <p class="subHeading">for All Nationalities</p>
-                        </div>
-                        <div class="sellingPointItems">
-                            <p class="mainHeading">Pay 1%</p>
-                            <p class="subHeading">Monthly</p>
-                        </div>
-                        <div class="sellingPointItems">
-                            <p class="mainHeading">2 Years Post Handover</p>
-                            <p class="subHeading">Payment Plan</p>
-                        </div>
-                    </div>
-                </div> */}
 
 
                 <div className="btnCtn">
