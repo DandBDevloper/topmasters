@@ -171,7 +171,7 @@ export default async function ProjectV1({ params }) {
             </div> */}
           </div>
 
-          <div dangerouslySetInnerHTML={{ __html: projectData.Full.description }} />
+          {/* <div dangerouslySetInnerHTML={{ __html: projectData.Full.description }} /> */}
         </div>
       </div>
 
@@ -197,7 +197,7 @@ export default async function ProjectV1({ params }) {
 
               <div className="col-12 col-md-6 color-white cntFeaturedSec d-flex flex-column justify-content-center align-items-center">
                 <h3>{projectData.Full.selling_title}</h3>
-                <div dangerouslySetInnerHTML={{ __html: projectData.Full.selling_description }} />
+                {/* <div dangerouslySetInnerHTML={{ __html: projectData.Full.selling_description }} /> */}
               </div>
             </div>
           </div>
