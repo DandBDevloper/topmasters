@@ -59,7 +59,7 @@ const DeveloperCard = ({ data, colstyle }) => {
             <div className="list-content">
               <div className="list-meta2 d-flex flex-column text-center justify-content-between align-items-center">
                 <h4 className=" text-center w-100">Emaar</h4>
-                <p>One of the best Dubai's real estate developer with an expertise in retail, hospitality and leisure.</p>
+                <p>One of the best Dubais real estate developer with an expertise in retail, hospitality and leisure.</p>
               </div>
             </div>
           </div>

@@ -8,7 +8,7 @@ const Hero = () => {
         <h6 className="hero-sub-title animate-up-1">THE BEST WAY TO</h6>
         <h2 className="hero-title animate-up-2">Find Your Dream Home</h2>
         <p className="hero-text fz15 animate-up-3">
-          We've more than 745,000 apartments, place plot.
+          Weve more than 745,000 apartments, place plot.
         </p>
         <HeroContent />
       </div>
