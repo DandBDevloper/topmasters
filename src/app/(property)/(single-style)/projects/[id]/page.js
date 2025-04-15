@@ -31,6 +31,7 @@ export const metadata = {
 export default async function ProjectV1({ params }) {
   // Retrieve the project ID from the route parameters
   const { id } = params;
+  // const [loading, setLoading] = useState(true);
 
   // Fetch project data from your API (disable caching for fresh data)
   const res = await fetch(`https://backend.thetopmasters.com/api/v1/projects/${id}`, {
@@ -51,8 +52,6 @@ export default async function ProjectV1({ params }) {
 
   // If data is an array, use the first project. Adjust as needed.
   const projectData = Array.isArray(result.data) ? result.data[0] : result.data;
-
-
 
   return (
     <>
