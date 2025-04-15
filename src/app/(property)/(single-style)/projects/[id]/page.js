@@ -1,37 +1,25 @@
 // "use client";
 // import { useEffect, useState } from 'react'
+import dynamic from 'next/dynamic';
 import DefaultHeader from "@/components/common/DefaultHeader";
 import Footer from "@/components/common/default-footer";
 import MobileMenu from "@/components/common/mobile-menu";
-import EnergyClass from "@/components/property/property-single-style/common/EnergyClass";
-import FloorPlans from "@/components/property/property-single-style/common/FloorPlans";
-import HomeValueChart from "@/components/property/property-single-style/common/HomeValueChart";
-import InfoWithForm from "@/components/property/property-single-style/common/more-info";
 import NearbySimilarProperty from "@/components/property/property-single-style/common/NearbySimilarProperty";
 import OverView from "@/components/property/property-single-style/common/OverView";
-import PropertyAddress from "@/components/property/property-single-style/common/PropertyAddress";
-import PropertyDetails from "@/components/property/property-single-style/common/PropertyDetails";
-import PropertyFeaturesAminites from "@/components/property/property-single-style/common/PropertyFeaturesAminites";
-import PropertyHeader from "@/components/property/property-single-style/common/PropertyHeader";
-import PropertyNearby from "@/components/property/property-single-style/common/PropertyNearby";
-import PropertyVideo from "@/components/property/property-single-style/common/PropertyVideo";
-import PropertyViews from "@/components/property/property-single-style/common/property-view";
-import ProperytyDescriptions from "@/components/property/property-single-style/common/ProperytyDescriptions";
-import ReviewBoxForm from "@/components/property/property-single-style/common/ReviewBoxForm";
-import VirtualTour360 from "@/components/property/property-single-style/common/VirtualTour360";
-import AllReviews from "@/components/property/property-single-style/common/reviews";
-import ContactWithAgent from "@/components/property/property-single-style/sidebar/ContactWithAgent";
-import ScheduleTour from "@/components/property/property-single-style/sidebar/ScheduleTour";
 import PropertyGallery from "@/components/property/property-single-style/single-v4/property-gallery";
 
 import React from "react";
-import MortgageCalculator from "@/components/property/property-single-style/common/MortgageCalculator";
-import WalkScore from "@/components/property/property-single-style/common/WalkScore";
 import ProjectHero from "@/components/property/property-single-style/common/ProjectHero";
 import Image from "next/image";
 import EnquiryForm from "@/components/common/enquiry-form";
-import MapComponent from "@/components/property/MapComponent";
+// import MapComponent from "@/components/property/MapComponent";
 import DownloadBrochure from "@/components/property/property-single-style/common/DownlaodBrochure";
+
+
+const MapComponent = dynamic(() => import('@/components/property/MapComponent'), {
+  loading: () => <p>Loading map...</p>,
+  ssr: false, // if the component only works in the client-side environment
+});
 
 export const metadata = {
   title: "Project Page",
@@ -46,7 +34,7 @@ export default async function ProjectV1({ params }) {
 
   // Fetch project data from your API (disable caching for fresh data)
   const res = await fetch(`https://backend.thetopmasters.com/api/v1/projects/${id}`, {
-    cache: "no-store",
+    next: { revalidate: 60 } // Cache the response and revalidate every 60 seconds.
   });
 
   // If the API response is not ok, immediately trigger a 404
@@ -77,23 +65,6 @@ export default async function ProjectV1({ params }) {
       {/* End Mobile Nav  */}
 
       <ProjectHero title={projectData.Full.name} developer={projectData.Banner.developer_name} image={projectData.Full.image}/>
-
-      {/* <section className="p-0">
-        <div className="sellingList">
-          <div className="sellingListItem">
-          Starting from <br/><span>AED 1,052,000</span>
-          </div>
-          <div className="sellingListItem">
-          Easy <br/><span>Payment Plans</span>
-          </div>
-          <div className="sellingListItem">
-          Handover<br/><span>2029</span>
-          </div>
-        </div>
-      </section> */}
-
-      
-
 
       <div className="container customPaddingProjectAbout">
         <div className="aboutSection">
@@ -140,35 +111,6 @@ export default async function ProjectV1({ params }) {
                 </div>
               </div>
             </div>
-
-
-            {/* <div
-              className={`col-sm-6 col-lg-4 `}
-            >
-              <div className="overview-element d-flex align-items-center">
-                <span className={`icon flaticon-edit`} />
-                <div className="ml15">
-                  <h6 className="mb-0">AED 800K</h6>
-                  <p className="text mb-0 fz15">Starting Price</p>
-                </div>
-              </div>
-
-              <div className="overview-element d-flex align-items-center">
-                <span className={`icon flaticon-bed`} />
-                <div className="ml15">
-                  <h6 className="mb-0">Handover</h6>
-                  <p className="text mb-0 fz15">2028</p>
-                </div>
-              </div>
-
-              <div className="overview-element d-flex align-items-center">
-                <span className={`icon flaticon-bed`} />
-                <div className="ml15">
-                  <h6 className="mb-0">Payment Plan</h6>
-                  <p className="text mb-0 fz15">60/40</p>
-                </div>
-              </div>
-            </div> */}
           </div>
 
           <div dangerouslySetInnerHTML={{ __html: projectData.Full.description }} />
@@ -189,8 +131,9 @@ export default async function ProjectV1({ params }) {
                 <Image
                   src={projectData.Full.images[1]} // Image URL
                   alt="Example of a Next.js Image"
-                  layout="fill" 
-                  objectFit="cover"
+                  fill
+                  // width={1200}
+                  // height={1200}
                   className="imgRounded"
                 />
               </div>
@@ -202,21 +145,6 @@ export default async function ProjectV1({ params }) {
             </div>
           </div>
       </div>
-
-      {/* <div className="customPaddingProject">
-        <div className="container">
-          <div className=" overflow-hidden position-relative">
-            <h2 className=" mb30">Floorplans of Dubai Island</h2>
-            <div className="row">
-              <div className="col-md-12">
-                <div className="accordion-style1 style2">
-                  <FloorPlans />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div> */}
 
       <div className="bgc-f7 customPaddingProject">
         <div className="container">
@@ -295,192 +223,6 @@ export default async function ProjectV1({ params }) {
       <div className="customPaddingProject">
         <DownloadBrochure />
       </div>
-
-      {/* Property All Single V1 */}
-      {/* <section className="pt60 pb90 bgc-f7">
-        <div className="container">
-          <div className="row">
-            <ProjectHero  images={projects.data.Gallery}/>
-          </div>
-
-          <div className="row mb30 mt30">
-            <PropertyGallery id={params.id}/>
-          </div>
-
-          <div className="row wrap">
-            <div className="col-lg-8">
-              <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
-                <h4 className="title fz17 mb30">Overview</h4>
-                <div className="row">
-                  <OverView />
-                </div>
-              </div>
-
-              <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
-                <h4 className="title fz17 mb30">Property Description</h4>
-                <ProperytyDescriptions />
-
-                <h4 className="title fz17 mb30 mt50">Property Details</h4>
-                <div className="row">
-                  <PropertyDetails />
-                </div>
-              </div>
-
-              <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
-                <h4 className="title fz17 mb30 mt30">Address</h4>
-                <div className="row">
-                  <PropertyAddress />
-                </div>
-              </div>
-
-              <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
-                <h4 className="title fz17 mb30">Features &amp; Amenities</h4>
-                <div className="row">
-                  <PropertyFeaturesAminites />
-                </div>
-              </div>
-
-              <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
-                <h4 className="title fz17 mb30">Energy Class</h4>
-                <div className="row">
-                  <EnergyClass />
-                </div>
-              </div>
-
-              <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
-                <h4 className="title fz17 mb30">Floor Plans</h4>
-                <div className="row">
-                  <div className="col-md-12">
-                    <div className="accordion-style1 style2">
-                      <FloorPlans />
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 ">
-                <h4 className="title fz17 mb30">Video</h4>
-                <div className="row">
-                  <PropertyVideo />
-                </div>
-              </div>
-
-              <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
-                <h4 className="title fz17 mb30">360° Virtual Tour</h4>
-                <div className="row">
-                  <VirtualTour360 />
-                </div>
-              </div>
-
-              <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
-                <h4 className="title fz17 mb30">What&apos;s Nearby?</h4>
-                <div className="row">
-                  <PropertyNearby />
-                </div>
-              </div>
-
-              <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
-                <h4 className="title fz17 mb30">Walkscore</h4>
-                <div className="row">
-                  <div className="col-md-12">
-                    <h4 className="fw400 mb20">
-                      10425 Tabor St Los Angeles CA 90034 USA
-                    </h4>
-                    <WalkScore />
-                  </div>
-                </div>
-              </div>
-
-              <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
-                <h4 className="title fz17 mb30">Mortgage Calculator</h4>
-                <div className="row">
-                  <MortgageCalculator />
-                </div>
-              </div>
-
-              <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
-                <div className="row">
-                  <PropertyViews />
-                </div>
-              </div>
-
-              <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
-                <h4 className="title fz17 mb30">Home Value</h4>
-                <div className="row">
-                  <HomeValueChart />
-                </div>
-              </div>
-
-              <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
-                <h4 className="title fz17 mb30">Get More Information</h4>
-                <InfoWithForm />
-              </div>
-
-              <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
-                <div className="row">
-                  <AllComments />
-                  <AllReviews />
-                </div>
-              </div>
-
-              <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
-                <h4 className="title fz17 mb30">Leave A Review</h4>
-                <div className="row">
-                  <ReviewBoxForm />
-                </div>
-              </div>
-            </div>
-
-            <div className="col-lg-4">
-              <div className="column">
-                <div className="default-box-shadow1 bdrs12 bdr1 p30 mb30-md bgc-white position-relative">
-                  <h4 className="form-title mb5">Schedule a tour</h4>
-                  <p className="text">Choose your preferred day</p>
-                  <ScheduleTour />
-                </div>
-
-                <div className="agen-personal-info position-relative bgc-white default-box-shadow1 bdrs12 p30 mt30">
-                  <div className="widget-wrapper mb-0">
-                    <h6 className="title fz17 mb30">Get More Information</h6>
-                    <ContactWithAgent />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="row mt30 align-items-center justify-content-between">
-            <div className="col-auto">
-              <div className="main-title">
-                <h2 className="title">Discover Our Featured Listings</h2>
-                <p className="paragraph">
-                  Aliquam lacinia diam quis lacus euismod
-                </p>
-              </div>
-            </div>
-
-            <div className="col-auto mb30">
-              <div className="row align-items-center justify-content-center">
-                <div className="col-auto">
-                  <button className="featured-prev__active swiper_button">
-                    <i className="far fa-arrow-left-long" />
-                  </button>
-                </div>
-
-                <div className="col-auto">
-                  <div className="pagination swiper--pagination featured-pagination__active" />
-                </div>
-
-                <div className="col-auto">
-                  <button className="featured-next__active swiper_button">
-                    <i className="far fa-arrow-right-long" />
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section> */}
 
       <section>
         <div className="container">

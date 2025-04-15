@@ -51,13 +51,13 @@ const PropertyCard = ({project}) => {
                     </Link>
                     {/* <span className="for-what">For Rent</span> */}
                     <div className="icons d-flex align-items-center propertyCardLink">
-                      <a href="#">
+                      <Link href="#">
                         <span className="flaticon-whatsapp" />
-                      </a>
+                      </Link>
                       {/* <a href="#">
                         <span className="flaticon-mobile" />
                       </a> */}
-                      <a className="far fa-phone"></a>
+                      <Link href="#" className="far fa-phone"></Link>
                     </div>
                   </div>
                 </div>
