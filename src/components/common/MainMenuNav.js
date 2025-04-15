@@ -17,8 +17,8 @@ const MainMenuNav = () => {
 
   useEffect(() => {
     homeItems.forEach((elm) => {
-      if (elm.href.split("/")[1] == pathname.split("/")[1]) {
-        setTopMenu("home");
+      if (elm.href.split("/projects")[1] == pathname.split("/")[1]) {
+        setTopMenu("projects");
       }
     });
     blogItems.forEach((elm) => {
@@ -57,9 +57,9 @@ const MainMenuNav = () => {
   return (
     <ul className="ace-responsive-menu">
       <li className="visible_list dropitem">
-        <a className="list-item" href="#">
-          <span className={topMenu == "home" ? "title menuActive" : "title"}>
-            Home
+        <a className="list-item" href="/projects">
+          <span className={topMenu == "projects" ? "title menuActive" : "title"}>
+            Projects
           </span>
           {/* <span className="arrow"></span> */}
         </a>

@@ -1196,7 +1196,7 @@ li {
     color: #717171;
     margin-bottom: 2px;
 }
-.listing-style1 .list-meta2 a {
+.propertyCardLink a {
     background-color: #ffffff;
     border-radius: 6px;
     height: 35px;
@@ -1208,7 +1208,7 @@ li {
     transition: all 0.4s ease;
     margin-right: 2px;
 }
-.listing-style1 .list-meta2 a:hover {
+.propertyCardLink a:hover {
     background-color: #f7f7f7;
     color: var(--headings-color);
 }

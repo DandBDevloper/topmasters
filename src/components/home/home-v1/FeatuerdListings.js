@@ -1,12 +1,46 @@
 "use client";
+import { useEffect, useState } from "react";
 import listings from "@/data/listings";
 import Image from "next/image";
 import Link from "next/link";
 import { Navigation, Pagination } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.min.css";
+import PropertyCard from "@/components/common/PropertyCard";
 
 const FeaturedListings = () => {
+  const [projects, setProjects] = useState([]);
+  const [loadingProjects, setLoadingProjects] = useState(true);
+  // Fetch projects from the API once on component mount
+    useEffect(() => {
+      async function fetchProjects() {
+        try {
+          const res = await fetch(
+            'https://backend.thetopmasters.com/api/v1/projects',
+            { cache: 'no-store' }
+          );
+          if (!res.ok) {
+            // If the API fails, you can either set projects to an empty array or handle the error
+            console.error('Error fetching projects:', res.status);
+            setProjects([]);
+          } else {
+            const result = await res.json();
+            if (!result.data || (Array.isArray(result.data) && result.data.length === 0)) {
+              setProjects([]);
+            } else {
+              // Assume result.data is an array
+              setProjects(result.data);
+            }
+          }
+        } catch (error) {
+          console.error('Failed to fetch projects:', error);
+          setProjects([]);
+        } finally {
+          setLoadingProjects(false);
+        }
+      }
+      fetchProjects();
+    }, []);
   return (
     <>
       <Swiper
@@ -36,66 +70,9 @@ const FeaturedListings = () => {
           },
         }}
       >
-        {listings.slice(0, 4).map((listing) => (
-          <SwiperSlide key={listing.id}>
-            <div className="item">
-              <div className="listing-style1">
-                <div className="list-thumb">
-                  <Image
-                    fill={true}
-                    className="w-100 h-100 cover"
-                    src={listing.image}
-                    alt="listings"
-                  />
-                  <div className="sale-sticker-wrap">
-                    {!listing.forRent && (
-                      <div className="list-tag fz12">
-                        <span className="flaticon-electricity me-2" />
-                        FEATURED
-                      </div>
-                    )}
-                  </div>
-
-                  {/* <div className="list-price">
-                    {listing.price} / <span>mo</span>
-                  </div> */}
-                </div>
-                <div className="list-content">
-                  <h6 className="list-title">
-                    <Link href={`/single-v1/${listing.id}`}>{listing.title}</Link>
-                  </h6>
-                  {/* <p className="list-text"><span className="flaticon-maps-1" /> {listing.location}</p> */}
-                  <div className="list-meta d-flex flex-column align-items-start">
-                    <a href="#">
-                    <b>Delivery Date:</b> <span>Dec, 2028</span>
-                    </a>
-                    <a href="#">
-                    <b>Price from:</b> <span className="">{listing.price} AED</span>
-                    </a>
-                    <a href="#">
-                    <b>Developer:</b> <span>{listing.developer}</span>
-                    </a>
-                  </div>
-                  <hr className="mt-2 mb-2" />
-                  <div className="list-meta2 d-flex justify-content-between align-items-center">
-                  <button href="#" className="ud-btn btn-thm3">
-                    Discover
-                    <i className="fal fa-arrow-right-long" />
-                  </button>
-                    {/* <span className="for-what">For Rent</span> */}
-                    <div className="icons d-flex align-items-center">
-                      <a href="#">
-                        <span className="flaticon-whatsapp" />
-                      </a>
-                      {/* <a href="#">
-                        <span className="flaticon-mobile" />
-                      </a> */}
-                      <a className="far fa-phone"></a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+        {projects.slice(0, 4).map((project) => (
+          <SwiperSlide key={project.id}>
+            <PropertyCard project={project} />
           </SwiperSlide>
         ))}
       </Swiper>
