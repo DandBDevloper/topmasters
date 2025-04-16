@@ -66,13 +66,13 @@ const HeaderNav = () => {
 
               <div className="col-auto">
                 <div className="d-flex align-items-center">
-                  <a
+                  {/* <a
                     className="login-info d-flex align-items-center me-3"
                     href="tel:+012305094502"
                   >
                     <i className="far fa-phone fz16 me-2"></i>{" "}
                     <span className="d-none d-xl-block">+971 50 000 0000</span>
-                  </a>
+                  </a> */}
                   {/* <a
                     href="#"
                     className="login-info d-flex align-items-center"
