@@ -14,7 +14,7 @@ const Footer = () => {
         <div className="row">
           <div className="col-lg-5">
             <div className="footer-widget mb-4 mb-lg-5">
-              <Link className="footer-logo" href="/">
+              <Link className="footer-logo d-flex justify-content-center justify-content-sm-start align-items-center" href="/">
                 <Image
                   width={200}
                   height={200}
@@ -23,12 +23,12 @@ const Footer = () => {
                   alt=""
                 />
               </Link>
-              <ContactMeta />
+              {/* <ContactMeta /> */}
               {/* <AppWidget /> */}
-              <div className="social-widget">
+              {/* <div className="social-widget">
                 <h6 className="text-white mb20">Follow us on social media</h6>
                 <Social />
-              </div>
+              </div> */}
             </div>
           </div>
           {/* End .col-lg-5 */}
