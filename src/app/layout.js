@@ -7,7 +7,7 @@ import "../../public/scss/main.scss";
 import "rc-slider/assets/index.css";
 import { DM_Sans, Poppins } from "next/font/google";
 import { useEffect } from "react";
-import Script from "next/script";
+import Document, { Html, Head, Main, NextScript } from 'next/document';
 
 if (typeof window !== "undefined") {
   import("bootstrap");
@@ -38,21 +38,32 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-D63FK7TCNL"></script>
-        <script>
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){
-          dataLayer.push(arguments)
-          }
-          gtag('js', new Date());
-
-          gtag('config', 'G-D63FK7TCNL');
-        </script>
+      {/* Google Tag Manager */}
+          <script
+                dangerouslySetInnerHTML={{
+                  __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+      new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+      j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+      'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+      })(window,document,'script','dataLayer','GTM-KVZRCGG9');`,
+                }}
+              />
+        {/* End Google Tag Manager */}
       </head>
       <body
         className={`body  ${poppins.variable} ${dmSans.variable}`}
         cz-shortcut-listen="false"
       >
+        {/* Google Tag Manager (noscript) */}
+        <noscript>
+            <iframe
+              src="https://www.googletagmanager.com/ns.html?id=GTM-KVZRCGG9"
+              height="0"
+              width="0"
+              style={{ display: 'none', visibility: 'hidden' }}
+            />
+          </noscript>
+          {/* End noscript */}
         <div className="wrapper ovh">{children}</div>
 
         <ScrollToTop />
