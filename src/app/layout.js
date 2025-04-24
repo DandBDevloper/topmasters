@@ -8,6 +8,8 @@ import "rc-slider/assets/index.css";
 import { DM_Sans, Poppins } from "next/font/google";
 import { useEffect } from "react";
 
+import { GoogleAnalytics } from ".@next/third-parties/google";
+
 if (typeof window !== "undefined") {
   import("bootstrap");
 }
@@ -40,6 +42,7 @@ export default function RootLayout({ children }) {
         className={`body  ${poppins.variable} ${dmSans.variable}`}
         cz-shortcut-listen="false"
       >
+        <GoogleAnalytics gaId="G-D63FK7TCNL"/>
         <div className="wrapper ovh">{children}</div>
 
         <ScrollToTop />
