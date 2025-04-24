@@ -7,6 +7,7 @@ import "../../public/scss/main.scss";
 import "rc-slider/assets/index.css";
 import { DM_Sans, Poppins } from "next/font/google";
 import { useEffect } from "react";
+import Script from "next/script";
 
 if (typeof window !== "undefined") {
   import("bootstrap");
@@ -36,11 +37,21 @@ export default function RootLayout({ children }) {
 
   return (
     <html lang="en">
+      <head>
+        {/* Google tag (gtag.js) */}
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-D63FK7TCNL"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', 'G-D63FK7TCNL');
+        </script>
+      </head>
       <body
         className={`body  ${poppins.variable} ${dmSans.variable}`}
         cz-shortcut-listen="false"
       >
-        {/* <GoogleAnalytics gaId="G-D63FK7TCNL"/> */}
         <div className="wrapper ovh">{children}</div>
 
         <ScrollToTop />
