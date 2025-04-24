@@ -17,8 +17,7 @@ import DownloadBrochure from "@/components/property/property-single-style/common
 
 
 const MapComponent = dynamic(() => import('@/components/property/MapComponent'), {
-  loading: () => <p>Loading map...</p>,
-  ssr: false, // if the component only works in the client-side environment
+  loading: () => <p>Loading map...</p>
 });
 
 export const metadata = {
