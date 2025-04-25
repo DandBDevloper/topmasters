@@ -43,7 +43,7 @@ export default function RootLayout({ children }) {
       >
         <div className="wrapper ovh">{children}</div>
         
-        <GoogleTagManager gtmId="GTM-KVZRCGG9" />
+        <GoogleTagManager gtmId="GTM-M4HG9K3S" />
         <ScrollToTop />
       </body>
     </html>
