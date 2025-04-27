@@ -187,7 +187,7 @@ const Home_V2 = () => {
       {/* End About Us */}
 
       {/* Our Testimonials */}
-      <section className="our-testimonial p-0">
+      {/* <section className="our-testimonial p-0">
         <div className="cta-banner2 bgc-f7 maxw1600 mx-auto pt110 pt60-md pb110 pb60-md bdrs12 position-relative">
           <div className="container">
             <div className="row">
@@ -217,7 +217,7 @@ const Home_V2 = () => {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
       {/* End Our Testimonials */}
 
       {/* Exclusive Agents */}

@@ -11,7 +11,7 @@ const MobileMenu = () => {
       <div className="mobile-menu">
         <div className="header innerpage-style">
           <div className="menu_and_widgets">
-            <div className="mobile_menu_bar d-flex justify-content-between align-items-center">
+            <div className="mobile_menu_bar d-flex justify-content-center align-items-center">
               <a
                 className="menubar"
                 href="#"
@@ -22,21 +22,21 @@ const MobileMenu = () => {
                 <Image
                   width={25}
                   height={9}
-                  src="/images/mobile-dark-nav-icon.svg"
+                  src="/images/mobile-light-nav-icon.svg"
                   alt="mobile icon"
                 />
               </a>
-              <Link className="mobile_logo" href="/">
+              <Link className="mobile_logo mx-auto w-100" href="/">
                 <Image
                   width={200}
                   height={55}
-                  src="/images/header-logo2.svg"
+                  src="/images/logo-light.svg"
                   alt="logo"
                 />
               </Link>
-              <Link href="/login">
+              {/* <Link href="/login">
                 <span className="icon fz18 far fa-user-circle" />
-              </Link>
+              </Link> */}
             </div>
           </div>
         </div>
@@ -69,9 +69,9 @@ const MobileMenu = () => {
               {/* End .hiddenbar_navbar_menu */}
 
               <div className="hiddenbar_footer position-relative bdrt1">
-                <div className="row pt45 pb30 pl30">
+                {/* <div className="row pt45 pb30 pl30">
                   <ContactInfo />
-                </div>
+                </div> */}
                 {/* End .row */}
 
                 <div className="row pt30 pb30 bdrt1">
