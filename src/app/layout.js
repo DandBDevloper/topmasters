@@ -37,6 +37,12 @@ export default function RootLayout({ children }) {
 
   return (
     <html lang="en">
+      <head>
+
+    <script src="https://cdn.botpress.cloud/webchat/v2.4/inject.js"></script>
+    <script src="https://files.bpcontent.cloud/2025/04/25/13/20250425135729-W0C4KS26.js"></script>
+    
+      </head>
       <body
         className={`body  ${poppins.variable} ${dmSans.variable}`}
         cz-shortcut-listen="false"
