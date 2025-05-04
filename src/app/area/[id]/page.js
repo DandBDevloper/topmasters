@@ -37,50 +37,31 @@ export const metadata = {
   title: "Project Page",
 };
 
-// export async function getProjects(el) {
-//   try {
-//     const res = await fetch(`http://127.0.0.1:8000/api/v1/projects/${el}`)
+export async function getProjects(id) {
+  try {
+    const res = await fetch(`https://backend.thetopmasters.com/api/v1/areas/${id}`)
 
-//     if (!res.ok) {
-//       throw new Error(`HTTP error! Status: ${res.status}`)
-//     }
+    if (!res.ok) {
+      throw new Error(`HTTP error! Status: ${res.status}`)
+    }
 
-//     const data = await res.json()
-//     console.log(data)
-//     return data
-//   } catch (error) {
-//     console.error("Failed to fetch projects:", error)
-//     throw error  // rethrow the error to handle it higher up in the call chain
-//   }
-// }
-
-const missionData = [
-  {
-    icon: "flaticon-garden",
-    title: "15 Mins",
-    description: "Away from Downtown.",
-  },
-  {
-    icon: "flaticon-secure-payment",
-    title: "15 Mins",
-    description: "Away from Downtown.",
-  },
-  {
-    icon: "flaticon-secure-payment",
-    title: "15 Mins",
-    description: "Away from Downtown.",
-  },,
-  {
-    icon: "flaticon-secure-payment",
-    title: "15 Mins",
-    description: "Away from Downtown.",
-  },
-];
+    const data = await res.json()
+    // console.log(data)
+    return data
+  } catch (error) {
+    console.error("Failed to fetch projects:", error)
+    throw error  // rethrow the error to handle it higher up in the call chain
+  }
+}
 
 async function AreaV1 ({params}) {
-  // let projects = await getProjects(params.id);
+  let areas = await getProjects(params.id);
 
-
+  const style = areas.data.img_url
+    ? {
+        backgroundImage: `linear-gradient(rgba(31,31,31,0.5), rgba(31,31,31,0.5)), url(${areas.data.img_url})`,
+      }
+    : {};
 
   return (
     <>
@@ -112,10 +93,10 @@ async function AreaV1 ({params}) {
       <section className="home-banner-style2 p0">
         <div className="home-style2">
           <div className="container maxw1600">
-            <div className="area-hero-banner bdrs12"></div>
+            <div className="area-hero-banner bdrs12" style={style}></div>
             <div className="row">
               <div className="col-xl-10 mx-auto">
-                <AreaHero />
+                <AreaHero areas={areas.data}/>
               </div>
             </div>
           </div>
@@ -204,10 +185,8 @@ async function AreaV1 ({params}) {
           </div> */}
 
           <div>
-          <h1>About Downtown Dubai</h1>
-            <p><strong>Downtown Dubai is a mixed-use development by Emaar Properties located in the city’s centre. It is located along Sheikh Zayed Road (E11), across from Al Wasl community on the northwest. It is bounded by Financial Centre Road (D71) towards the northeast and Business Bay towards the south.</strong></p>
-
-            <p>Spanning over 30M sq. ft, the territory will feature upscale 4-5 bedroom townhouses and 6-7 bedroom <a href="#">villas</a>. Property area ranges from 2,207 sq ft to 17,588 sq ft. Residences with 5-7 bedrooms will have staff rooms, and those with 6-7 bedrooms will also include a private gym. Property area ranges from 2,207 sq ft to 17,588 sq ft. Residences with 5-7 bedrooms will have staff rooms, and those with 6-7 bedrooms will also include a private gym. Property area ranges from 2,207 sq ft to 17,588 sq ft. Residences with 5-7 bedrooms will have staff rooms, and those with 6-7 bedrooms will also include a private gym. Property area ranges from 2,207 sq ft to 17,588 sq ft. Residences with 5-7 bedrooms will have staff rooms, and those with 6-7 bedrooms will also include a private gym</p>
+          <h1>About {areas.data.name}</h1>
+          <div dangerouslySetInnerHTML={{ __html: areas.data.content }} />
           </div>
         </div>
       </div>
@@ -247,7 +226,7 @@ async function AreaV1 ({params}) {
           </div>
       </div> */}
 
-      <div className="">
+      {/* <div className="">
       <div className="container customPaddingProjectGallery">
       <div className="row mt20">
 
@@ -264,49 +243,10 @@ async function AreaV1 ({params}) {
             </div>
           </div>
         ))}
-                  {/* <div className="col-6 mb25">
-                    <div className="overview-element d-flex align-items-center">
-                      <span className={`icon flaticon-home-1`} />
-                      <div className="ml15">
-                        <h6 className="mb-0">10 Mins</h6>
-                        <p className="text mb-0 fz15">to Dubai Marina</p>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="col-6 mb25">
-                    <div className="overview-element d-flex align-items-center">
-                      <span className={`icon flaticon-home-1`} />
-                      <div className="ml15">
-                        <h6 className="mb-0">10 Mins</h6>
-                        <p className="text mb-0 fz15">to Dubai Marina</p>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="col-6 mb25">
-                    <div className="overview-element d-flex align-items-center">
-                      <span className={`icon flaticon-home-1`} />
-                      <div className="ml15">
-                        <h6 className="mb-0">10 Mins</h6>
-                        <p className="text mb-0 fz15">to Dubai Marina</p>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="col-6 mb25">
-                    <div className="overview-element d-flex align-items-center">
-                      <span className={`icon flaticon-home-1`} />
-                      <div className="ml15">
-                        <h6 className="mb-0">10 Mins</h6>
-                        <p className="text mb-0 fz15">to Dubai Marina</p>
-                      </div>
-                    </div>
-                  </div> */}
                   
                 </div>
       </div>
-      </div>
+      </div> */}
 
       {/* <div className="customPaddingProject">
         <div className="container floorplanSection">

@@ -1,4 +1,5 @@
 "use client";
+import { useState, useEffect } from 'react';
 import Image from "next/image";
 import Link from "next/link";
 import SwiperCore, { Navigation, Pagination } from "swiper";
@@ -6,45 +7,43 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.min.css";
 
 const ExploreCities = () => {
-  const cities = [
-    {
-      id: 1,
-      name: "Downtown Dubai",
-      image: "/images/home/downtown.jpg",
-      number: 12,
-    },
-    {
-      id: 2,
-      name: "Dubai Marina",
-      image: "/images/home/dubai-marina.jpg",
-      number: 8,
-    },
-    {
-      id: 3,
-      name: "Dubai Creek Harbour",
-      image: "/images/home/DubaiCreekHarbour.jpg",
-      number: 15,
-    },
-    {
-      id: 4,
-      name: "Business Bay",
-      image: "/images/home/business-bay.webp",
-      number: 10,
-    },
-    {
-      id: 5,
-      name: "Palm Jumeirah",
-      image: "/images/home/palm-jumeirah.jpg",
-      number: 12,
-    },
-    {
-      id: 6,
-      name: "JVC",
-      image: "/images/listings/city-listing-1.jpg",
-      number: 8,
-    },
-    // Add more cities if needed
-  ];
+  const [cities, setCities] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function loadAreas() {
+      try {
+        const res = await fetch('https://backend.thetopmasters.com/api/v1/areas');
+        if (!res.ok) throw new Error(`Fetch failed: ${res.status}`);
+        const json = await res.json();
+        // Adjust if your API wraps data in `data`
+        const areas = Array.isArray(json.data) ? json.data : json;
+
+        const mapped = areas.map(a => ({
+          id: a.id,
+          name: a.name,
+          image: a.img_url,                  // already a full `/storage/...` URL
+          number: a.count_properties || 0,    // whatever numeric field
+        }));
+
+        setCities(mapped);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    loadAreas();
+  }, []);
+
+  if (loading) {
+    return <p>Loading areas…</p>;
+  }
+
+  if (cities.length === 0) {
+    return <p>No areas to show.</p>;
+  }
 
   return (
     <>
@@ -77,7 +76,7 @@ const ExploreCities = () => {
         {cities.map((city) => (
           <SwiperSlide key={city.id}>
             <div className="item">
-              <Link href="/header-map-style">
+              <Link href={`area/${city.id}`}>
                 <div className="feature-style2 mb30">
                   <div className="feature-img HomeAreaImg">
                     <Image
@@ -89,7 +88,6 @@ const ExploreCities = () => {
                   </div>
                   <div className="feature-content pt20">
                     <h6 className="title mb-1">{city.name}</h6>
-                    <p className="text fz15">{city.number} Properties</p>
                   </div>
                 </div>
               </Link>

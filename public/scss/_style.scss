@@ -3314,9 +3314,10 @@ li {
 
 /*Home 2 Banner Content*/
 .area-hero-banner {
-    background-image: linear-gradient(rgba(31,31,31, 0.5), rgba(31,31,31, 0.5)), url(../images/area/downtown.webp);
+    // background-image: linear-gradient(rgba(31,31,31, 0.5), rgba(31,31,31, 0.5)), url(../images/area/downtown.webp);
     background-position: center center;
     background-repeat: no-repeat;
+    background-size: cover;
     height: 650px;
     max-width: 1600px;
     position: absolute;
