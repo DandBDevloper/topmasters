@@ -27,6 +27,9 @@ async function Blog () {
   // }, [blogs]);
   return (
     <section className="row">
+      <pre style={{ whiteSpace: 'pre-wrap', background: '#f9f9f9', padding: '1rem' }}>
+        {JSON.stringify(blogs, null, 2)}
+      </pre>
       {blogs.map((blog) => (
         <div className="col-sm-6 col-lg-4" key={blog.id}>
           <div className="blog-style1">
