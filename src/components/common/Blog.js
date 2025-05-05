@@ -6,7 +6,10 @@ import Link from "next/link";
 
 export async function getBlog() {
   try {
-    const res = await fetch(`https://backend.thetopmasters.com/api/v1/blog`)
+    const res   = await fetch(
+      'https://backend.thetopmasters.com/api/v1/blog',
+      { cache: 'no-store' }
+    )
 
     if (!res.ok) {
       throw new Error(`HTTP error! Status: ${res.status}`)
