@@ -2,19 +2,18 @@ import { allblogs } from '@/data/blogs';
 import Image from 'next/image';
 import React from 'react'
 
-export default function Details({id}) {
-    const data = allblogs.filter((elm) => elm.id == id)[0] || allblogs[0];
+export default function Details({post}) {
+    // const data = allblogs.filter((elm) => elm.id == id)[0] || allblogs[0];
   return (
     <>
      <div className="container">
           <div className="row" data-aos="fade-up" data-aos-delay="100">
             <div className="col-lg-12">
               <h2 className="blog-title">
-                {data.title ||  data.content || `7 Simple Ways to Keep Your Kid&apos;s Toys From Taking Over Your
-                Home`}
+                {post.title ||  post.content || `Blog Title`}
                 
               </h2>
-              <div className="blog-single-meta">
+              {/* <div className="blog-single-meta">
                 <div className="post-author d-sm-flex align-items-center">
                   <Image
                     width={40}
@@ -33,7 +32,7 @@ export default function Details({id}) {
                     {data.date.month} {data.date.day}, {data.date.year || 2022}
                   </a>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
@@ -53,7 +52,7 @@ export default function Details({id}) {
                   priority
                   className="w-100 h-100 cover"
                   // style={{maxHeight:'600px',objectFit:'cover'}}
-                  src='/images/blog/blog-single-1.jpg'
+                  src={post.featured_image}
                   alt="blog"
                 />
               </div>

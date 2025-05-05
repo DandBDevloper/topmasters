@@ -16,6 +16,7 @@ import Cta from "@/components/home/home-v2/Cta";
 
 import Link from "next/link";
 import HeaderNav from "@/components/home/home-v2/HeaderNav";
+import Blog from "@/components/common/Blog";
 
 export const metadata = {
   title: "Home v2 || Homez - Real Estate NextJS Template",
@@ -276,7 +277,7 @@ const Home_V2 = () => {
       {/* Exclusive Agents */}
 
       {/* Our Partners */}
-      <section className="our-partners pt0">
+      <section className="our-partners">
         <div className="container">
           <div className="row">
             <div className="col-lg-12 wow fadeInUp" data-wow-delay="100">
@@ -299,6 +300,29 @@ const Home_V2 = () => {
         </div>
       </section>
       {/* End Our Partners */}
+
+
+      {/* Explore Blog */}
+      <section className="mb75 mb0-md pb30-md">
+        <div className="container">
+          <div className="row">
+            <div className="col-lg-6 m-auto" data-aos="fade-up">
+              <div className="main-title text-start text-md-center">
+                <h2 className="title">From Our Blog</h2>
+                <p className="paragraph">
+                  Aliquam lacinia diam quis lacus euismod
+                </p>
+              </div>
+            </div>
+          </div>
+          {/* End .row */}
+
+          <div className="row" data-aos="fade-up" data-aos-delay="300">
+            <Blog />
+          </div>
+          {/* End .row */}
+        </div>
+      </section>
 
       {/* Our CTA */}
       <Cta />
