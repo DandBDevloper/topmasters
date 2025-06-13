@@ -4,6 +4,7 @@ import BlogFilterContainer from "@/components/blog/blog-list-v3/BlogFilterContai
 import DefaultHeader from "@/components/common/DefaultHeader";
 import Footer from "@/components/common/default-footer";
 import MobileMenu from "@/components/common/mobile-menu";
+import { Suspense } from "react";
 
 export const metadata = {
   title: "Blog List v3  || Homez - Real Estate NextJS Template",
@@ -39,7 +40,9 @@ const BlogV3 = () => {
       {/* End Breadcrumb Start */}
 
       {/* Blog Section Area */}
-      <BlogFilterContainer/>
+      <Suspense fallback={<p>Loading blog...</p>}>
+        <BlogFilterContainer />
+      </Suspense>
       {/* End Blog Section Area */}
 
       {/* Start Our Footer */}

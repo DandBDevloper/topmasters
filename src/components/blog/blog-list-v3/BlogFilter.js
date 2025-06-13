@@ -1,4 +1,3 @@
-// components/blog/BlogFilter.jsx
 'use client'
 
 import React, { useMemo } from 'react'

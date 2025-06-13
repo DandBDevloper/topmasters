@@ -1,8 +1,8 @@
-// app/blog/page.js
-import DefaultHeader       from "@/components/common/DefaultHeader"
-import MobileMenu          from "@/components/common/mobile-menu"
+import DefaultHeader from "@/components/common/DefaultHeader"
+import MobileMenu from "@/components/common/mobile-menu"
 import BlogFilterContainer from "@/components/blog/blog-list-v3/BlogFilterContainer"
-import Footer              from "@/components/common/default-footer"
+import Footer from "@/components/common/default-footer"
+import { Suspense } from "react"
 
 export const metadata = {
   title: "Blog • Homez - Real Estate NextJS Template",
@@ -26,7 +26,10 @@ export default function BlogV3() {
         </div>
       </section>
 
-      <BlogFilterContainer />
+      {/* ✅ Wrap client component with Suspense */}
+      <Suspense fallback={<p>Loading blog...</p>}>
+        <BlogFilterContainer />
+      </Suspense>
 
       <section className="footer-style1 pt60 pb-0">
         <Footer />
