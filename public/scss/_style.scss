@@ -4342,6 +4342,7 @@ li {
 .blog-style1 .blog-img {
     border-radius: 12px;
     overflow: hidden;
+    aspect-ratio: 16/9;
 }
 .blog-style1 .blog-img img {
     -webkit-transition: all 0.4s ease;
@@ -4498,7 +4499,7 @@ li {
 /* Brands */
 /* Commons Styles of Template */
 section {
-    padding: 120px 0;
+    padding: 120px 0 0 0;
     position: relative;
 }
 @media (max-width: 991.98px) {

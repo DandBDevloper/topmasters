@@ -305,16 +305,25 @@ const Home_V2 = () => {
       {/* Explore Blog */}
       <section className="mb75 mb0-md pb30-md">
         <div className="container">
-          <div className="row">
-            <div className="col-lg-6 m-auto" data-aos="fade-up">
-              <div className="main-title text-start text-md-center">
-                <h2 className="title">From Our Blog</h2>
-                <p className="paragraph">
-                  Aliquam lacinia diam quis lacus euismod
-                </p>
-              </div>
+        <div className="row align-items-center">
+          {/* Left side: title + subtitle */}
+          <div className="col-lg-6" data-aos="fade-up">
+            <div className="main-title text-start text-md-start">
+              <h2 className="title">From Our Blog</h2>
+              <p className="paragraph">
+                Aliquam lacinia diam quis lacus euismod
+              </p>
             </div>
           </div>
+
+          {/* Right side: button */}
+          <div className="col-lg-6 text-lg-end mt-3 mt-lg-0" data-aos="fade-up" data-aos-delay="200">
+            <Link href="/blog">
+              <p className="ud-btn btn-white2">View All</p>
+            </Link>
+          </div>
+        </div>
+
           {/* End .row */}
 
           <div className="row" data-aos="fade-up" data-aos-delay="300">

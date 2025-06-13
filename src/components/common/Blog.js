@@ -7,7 +7,7 @@ import Link from "next/link";
 export async function getBlog() {
   try {
     const res   = await fetch(
-      'https://backend.thetopmasters.com/api/v1/blog',
+      'https://backend.thetopmasters.com/api/v1/blog?limit=3',
       { cache: 'no-store' }
     )
 
@@ -29,32 +29,45 @@ async function Blog () {
   //   console.log("🟢 (client) blogs:", blogs);
   // }, [blogs]);
   return (
-    <section className="row">
+    <div className="row">
       {blogs.map((blog) => (
         <div className="col-sm-6 col-lg-4" key={blog.id}>
-          <div className="blog-style1">
-            <div className="blog-img">
-              <Image
-                width={386}
-                height={271}
-                className="w-100 h-100 cover"
-                src={blog.featured_image}
-                alt={blog.title}
-              />
+        <div className="blog-style1">
+          <div className="blog-img">
+            <Image
+              width={386}
+              height={271}
+              className="w-100 h-100 cover"
+              src={blog.featured_image}
+              alt={blog.title}
+            />
+          </div>
+          <div className="blog-content">
+            <div className="date">
+              <span className="month">
+                {/* example: July → you’ll want to parse updated_at or have server send */}
+                {new Date(blog.updated_at).toLocaleString('default',{month:'long'})}
+              </span>
+              <span className="day">
+                {new Date(blog.updated_at).getUTCDate()}
+              </span>
             </div>
-            <div className="blog-content">
-              {/* <div className="date">
-                <span className="month">{blog.date.month}</span>
-                <span className="day">{blog.date.day}</span>
-              </div> */}
-              <h6 className="title mt-4">
-                <Link href={`/blogs/${blog.id}`}>{blog.title}</Link>
-              </h6>
-            </div>
+            {/* if you want the first category tag on the card */}
+            {/* {blog.categories?.[0] && (
+              <a className="tag" href="#">
+                {blog.categories[0].name}
+              </a>
+            )} */}
+            <h6 className="title mt-1">
+              <Link href={`/blog/${blog.id}`}>
+                {blog.title}
+              </Link>
+            </h6>
           </div>
         </div>
+      </div>
       ))}
-    </section>
+    </div>
   );
 };
 

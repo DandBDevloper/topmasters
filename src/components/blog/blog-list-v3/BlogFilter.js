@@ -1,47 +1,34 @@
-"use client";
-import { blogsThree } from "@/data/blogs";
-import Image from "next/image";
-import Link from "next/link";
-import React, { useState } from "react";
+// components/blog/BlogFilter.jsx
+'use client'
 
-const BlogFilter = () => {
-  
+import React, { useMemo } from 'react'
+import Image from 'next/image'
+import Link  from 'next/link'
 
-  const [filteredBlogs, setFilteredBlogs] = useState(blogsThree);
-  const [activeCategory, setActiveCategory] = useState("All");
-
-  const handleFilter = (category) => {
-    if (category === "All") {
-      setFilteredBlogs(blogsThree);
-    } else {
-      const filtered = blogsThree.filter((blog) => blog.category === category);
-      setFilteredBlogs(filtered);
-    }
-    setActiveCategory(category);
-  };
-
-  const categories = [
-    "All",
-    "Home Improvement",
-    "Life & Style",
-    "Finance",
-    "Selling a Home",
-    "Renting a Home",
-    "Buying a Home",
-  ];
+export default function BlogFilter({ posts, selectedCategory, onFilter }) {
+  // derive unique categories from the posts you fetched
+  const categories = useMemo(() => {
+    const map = new Map()
+    posts.forEach(post => {
+      (post.categories||[]).forEach(c => map.set(c.id, c.name))
+    })
+    // always include “All” as first option
+    return [{ id: 'All', name: 'All' }, ...Array.from(map, ([id,name])=>({id,name}))]
+  }, [posts])
 
   return (
     <>
       <ul className="nav nav-pills mb20">
-        {categories.map((category, index) => (
-          <li className="nav-item" role="presentation" key={index}>
+        {categories.map(({ id, name }) => (
+          <li className="nav-item" role="presentation" key={id}>
             <button
-              className={`nav-link mb-2 mb-lg-0 fw500 dark-color ${
-                category === activeCategory ? "active" : ""
-              }`}
-              onClick={() => handleFilter(category)}
+              className={
+                `nav-link mb-2 mb-lg-0 fw500 dark-color ` +
+                (String(id) === String(selectedCategory) ? 'active' : '')
+              }
+              onClick={() => onFilter(id)}
             >
-              {category}
+              {name}
             </button>
           </li>
         ))}
@@ -49,7 +36,7 @@ const BlogFilter = () => {
       {/* End nav */}
 
       <div className="row">
-        {filteredBlogs.map((blog) => (
+        {posts.map((blog) => (
           <div className="col-sm-6 col-lg-4" key={blog.id}>
             <div className="blog-style1">
               <div className="blog-img">
@@ -57,20 +44,30 @@ const BlogFilter = () => {
                   width={386}
                   height={271}
                   className="w-100 h-100 cover"
-                  src={blog.image}
-                  alt="blog"
+                  src={blog.featured_image}
+                  alt={blog.title}
                 />
               </div>
               <div className="blog-content">
                 <div className="date">
-                  <span className="month">July</span>
-                  <span className="day">{blog.date.day}</span>
+                  <span className="month">
+                    {/* example: July → you’ll want to parse updated_at or have server send */}
+                    {new Date(blog.updated_at).toLocaleString('default',{month:'long'})}
+                  </span>
+                  <span className="day">
+                    {new Date(blog.updated_at).getUTCDate()}
+                  </span>
                 </div>
-                <a className="tag" href="#">
-                  {blog.tag}
-                </a>
+                {/* if you want the first category tag on the card */}
+                {/* {blog.categories?.[0] && (
+                  <a className="tag" href="#">
+                    {blog.categories[0].name}
+                  </a>
+                )} */}
                 <h6 className="title mt-1">
-                  <Link href={`/blogs/${blog.id}`}>{blog.title}</Link>
+                  <Link href={`/blog/${blog.id}`}>
+                    {blog.title}
+                  </Link>
                 </h6>
               </div>
             </div>
@@ -78,7 +75,5 @@ const BlogFilter = () => {
         ))}
       </div>
     </>
-  );
-};
-
-export default BlogFilter;
+  )
+}

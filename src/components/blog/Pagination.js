@@ -1,23 +1,56 @@
-"use client";
-import React, { useState } from "react";
+// components/blog/Pagination.jsx
+'use client'
 
-const Pagination = () => {
-  const totalPages = 6; // Total number of pages
-  const [currentPage, setCurrentPage] = useState(2); // Current active page
+import React from 'react'
+
+export default function Pagination({
+  total,
+  perPage = 9,        // default to 9 per page
+  currentPage,
+  onPageChange,
+}) {
+  const totalPages = Math.ceil(total / perPage)
+  if (totalPages <= 1) return null
+
+  const delta = 2 // how many pages to show around the current
+  const range = []
+
+  // build window of [currentPage - delta … currentPage + delta]
+  for (
+    let i = Math.max(1, currentPage - delta);
+    i <= Math.min(totalPages, currentPage + delta);
+    i++
+  ) {
+    range.push(i)
+  }
+
+  // build final list, inserting ellipses where needed
+  const pages = []
+  if (range[0] > 1) {
+    pages.push(1)
+    if (range[0] > 2) {
+      pages.push('left-ellipsis')
+    }
+  }
+  pages.push(...range)
+  if (range[range.length - 1] < totalPages) {
+    if (range[range.length - 1] < totalPages - 1) {
+      pages.push('right-ellipsis')
+    }
+    pages.push(totalPages)
+  }
 
   const handlePrevious = () => {
-    setCurrentPage((prevPage) => prevPage - 1);
-  };
-
+    if (currentPage > 1) onPageChange(currentPage - 1)
+  }
   const handleNext = () => {
-    setCurrentPage((prevPage) => prevPage + 1);
-  };
+    if (currentPage < totalPages) onPageChange(currentPage + 1)
+  }
 
-  const renderPaginationItems = () => {
-    const paginationItems = [];
-
-    paginationItems.push(
-      <li className="page-item" key="previous">
+  return (
+    <ul className="page_navigation mt20">
+      {/* Previous */}
+      <li className="page-item">
         <button
           className="page-link"
           onClick={handlePrevious}
@@ -26,24 +59,35 @@ const Pagination = () => {
           <span className="fas fa-angle-left" />
         </button>
       </li>
-    );
 
-    for (let page = 1; page <= totalPages; page++) {
-      paginationItems.push(
-        <li
-          className={`page-item ${currentPage === page ? "active" : ""}`}
-          aria-current={currentPage === page ? "page" : undefined}
-          key={page}
-        >
-          <button className="page-link" onClick={() => setCurrentPage(page)}>
-            {page}
-          </button>
-        </li>
-      );
-    }
+      {/* Page Numbers */}
+      {pages.map((p, idx) => {
+        if (p === 'left-ellipsis' || p === 'right-ellipsis') {
+          return (
+            <li className="page-item disabled" key={p + idx}>
+              <span className="page-link">…</span>
+            </li>
+          )
+        } else {
+          return (
+            <li
+              className={`page-item ${currentPage === p ? 'active' : ''}`}
+              aria-current={currentPage === p ? 'page' : undefined}
+              key={p}
+            >
+              <button
+                className="page-link"
+                onClick={() => onPageChange(p)}
+              >
+                {p}
+              </button>
+            </li>
+          )
+        }
+      })}
 
-    paginationItems.push(
-      <li className="page-item" key="next">
+      {/* Next */}
+      <li className="page-item">
         <button
           className="page-link"
           onClick={handleNext}
@@ -52,12 +96,6 @@ const Pagination = () => {
           <span className="fas fa-angle-right" />
         </button>
       </li>
-    );
-
-    return paginationItems;
-  };
-
-  return <ul className="page_navigation mt20">{renderPaginationItems()}</ul>;
-};
-
-export default Pagination;
+    </ul>
+  )
+}
