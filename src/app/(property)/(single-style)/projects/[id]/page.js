@@ -26,7 +26,7 @@ function ErrorFallback({ error, resetErrorBoundary }) {
           <h1 className="display-4 text-danger">404</h1>
           <h2 className="mb-4">Project Not Found</h2>
           <p className="text-muted mb-4">
-            The project you're looking for doesn't exist or has been moved.
+            The project you are looking for doesnt exist or has been moved.
           </p>
           <div className="d-flex gap-3 justify-content-center">
             <a href="/" className="btn btn-primary">Go Home</a>
