@@ -29,7 +29,7 @@ const PropertyCard = ({project}) => {
                 </div>
                 <div className="list-content">
                   <h6 className="list-title">
-                    <Link href={`/projects/${project.id}`}>{project.name}</Link>
+                    <Link href={`/projects/${project.slug}`}>{project.name}</Link>
                   </h6>
                   {/* <p className="list-text"><span className="flaticon-maps-1" /> {listing.location}</p> */}
                   <div className="list-meta d-flex flex-column align-items-start">
@@ -45,7 +45,7 @@ const PropertyCard = ({project}) => {
                   </div>
                   <hr className="mt-2 mb-2" />
                   <div className="list-meta2 d-flex justify-content-between align-items-center">
-                  <Link href={`/projects/${project.id}`} className="ud-btn btn-thm3">
+                  <Link href={`/projects/${project.slug}`} className="ud-btn btn-thm3">
                     Discover
                     <i className="fal fa-arrow-right-long" />
                     </Link>
