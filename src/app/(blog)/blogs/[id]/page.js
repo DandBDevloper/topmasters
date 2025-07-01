@@ -11,18 +11,120 @@ import Blog          from "@/components/common/Blog";
 import DefaultHeader from "@/components/common/DefaultHeader";
 import Footer        from "@/components/common/default-footer";
 import MobileMenu    from "@/components/common/mobile-menu";
-import Image         from "next/image";
 
-export const metadata = {
-  title: "Blog Single  || Homez - Real Estate NextJS Template",
-};
+// Dynamic metadata generation
+export async function generateMetadata({ params }) {
+  const { id } = params;
+  
+  try {
+    // Fetch the blog post data
+    const res = await fetch(
+      `https://backend.thetopmasters.com/api/v1/blogs/${id}`,
+      { cache: "no-store" }
+    );
+    
+    if (!res.ok) {
+      // Fallback metadata if API fails
+      return {
+        title: "Blog Post || Homez - Real Estate NextJS Template",
+        description: "Read our latest real estate insights and market trends.",
+      };
+    }
+
+    const json = await res.json();
+    const post = json.data;
+
+    // Generate dynamic metadata
+    const title = post.seo_title || post.title || "Blog Post";
+    const description = post.seo_description || `Read about ${post.title} and stay updated with the latest real estate insights.`;
+    const imageUrl = post.featured_image || "/images/default-blog-image.jpg";
+    const url = `https://yourdomain.com/blog/${id}`;
+
+    return {
+      title: `${title}`,
+      description: description,
+      
+      // Open Graph (Facebook, LinkedIn, etc.)
+      openGraph: {
+        title: title,
+        description: description,
+        type: "article",
+        url: url,
+        siteName: "Homez",
+        images: [
+          {
+            url: imageUrl,
+            width: 1200,
+            height: 630,
+            alt: title,
+          },
+        ],
+        locale: "en_US",
+        publishedTime: post.created_at,
+        modifiedTime: post.updated_at,
+      },
+
+      // Twitter Card
+      twitter: {
+        card: "summary_large_image",
+        title: title,
+        description: description,
+        images: [imageUrl],
+        creator: "@homez_realestate",
+        site: "@homez_realestate",
+      },
+
+      // Additional SEO tags
+      robots: {
+        index: true,
+        follow: true,
+        googleBot: {
+          index: true,
+          follow: true,
+          "max-video-preview": -1,
+          "max-image-preview": "large",
+          "max-snippet": -1,
+        },
+      },
+
+      // Canonical URL
+      alternates: {
+        canonical: url,
+      },
+
+      // Article specific metadata
+      other: {
+        "article:author": "Homez Editorial Team",
+        "article:published_time": post.created_at,
+        "article:modified_time": post.updated_at,
+        "article:section": "Real Estate",
+        "article:tag": "real estate, property, investment, market trends",
+      },
+
+      // Verification tags (add your actual verification codes)
+      verification: {
+        google: "your-google-verification-code",
+        yandex: "your-yandex-verification-code",
+        yahoo: "your-yahoo-verification-code",
+      },
+    };
+  } catch (error) {
+    console.error("Error generating metadata:", error);
+    
+    // Fallback metadata if there's an error
+    return {
+      title: "Blog Post || Homez - Real Estate NextJS Template",
+      description: "Read our latest real estate insights and market trends.",
+    };
+  }
+}
 
 export default async function BlogSingle({ params }) {
   const { id } = params;
 
   // 1) Fetch the post by ID
   const res = await fetch(
-    `https://backend.thetopmasters.com/api/v1/blog/${id}`,
+    `https://backend.thetopmasters.com/api/v1/blogs/${id}`,
     { cache: "no-store" }          // always fetch fresh data
   );
   if (!res.ok) {

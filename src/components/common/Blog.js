@@ -6,7 +6,7 @@ import Link from "next/link";
 
 export async function getBlog() {
   try {
-    const res   = await fetch('https://backend.thetopmasters.com/api/v1/blog?limit=3')
+    const res   = await fetch('https://backend.thetopmasters.com/api/v1/blogs?limit=3')
 
     if (!res.ok) {
       throw new Error(`HTTP error! Status: ${res.status}`)
@@ -56,7 +56,7 @@ async function Blog () {
               </a>
             )} */}
             <h6 className="title mt-1">
-              <Link href={`/blog/${blog.id}`}>
+              <Link href={`/blogs/${blog.slug}`}>
                 {blog.title}
               </Link>
             </h6>

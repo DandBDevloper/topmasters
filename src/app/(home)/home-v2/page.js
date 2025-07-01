@@ -19,7 +19,7 @@ import HeaderNav from "@/components/home/home-v2/HeaderNav";
 import Blog from "@/components/common/Blog";
 
 export const metadata = {
-  title: "Home v2 || Homez - Real Estate NextJS Template",
+  title: "The Top Master",
 };
 
 const Home_V2 = () => {
