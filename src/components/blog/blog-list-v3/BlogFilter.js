@@ -17,7 +17,7 @@ export default function BlogFilter({ posts, selectedCategory, onFilter }) {
 
   return (
     <>
-      <ul className="nav nav-pills mb20">
+      {/* <ul className="nav nav-pills mb20">
         {categories.map(({ id, name }) => (
           <li className="nav-item" role="presentation" key={id}>
             <button
@@ -31,7 +31,7 @@ export default function BlogFilter({ posts, selectedCategory, onFilter }) {
             </button>
           </li>
         ))}
-      </ul>
+      </ul> */}
       {/* End nav */}
 
       <div className="row">
@@ -64,7 +64,7 @@ export default function BlogFilter({ posts, selectedCategory, onFilter }) {
                   </a>
                 )} */}
                 <h6 className="title mt-1">
-                  <Link href={`/blog/${blog.id}`}>
+                  <Link href={`/blogs/${blog.slug}`}>
                     {blog.title}
                   </Link>
                 </h6>

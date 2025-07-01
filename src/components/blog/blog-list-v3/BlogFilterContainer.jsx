@@ -27,7 +27,7 @@ export default function BlogFilterContainer() {
     setLoading(true)
     setError(null)
     try {
-      const url = new URL('https://backend.thetopmasters.com/api/v1/blog')
+      const url = new URL('https://backend.thetopmasters.com/api/v1/blogs')
       url.searchParams.set('page', page)
       url.searchParams.set('limit', limit)
       if (selectedCategory !== 'All') {
