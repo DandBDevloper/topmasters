@@ -318,7 +318,7 @@ const Home_V2 = () => {
 
           {/* Right side: button */}
           <div className="col-lg-6 text-lg-end mt-3 mt-lg-0" data-aos="fade-up" data-aos-delay="200">
-            <Link href="/blog">
+            <Link href="/blogs">
               <p className="ud-btn btn-white2">View All</p>
             </Link>
           </div>
