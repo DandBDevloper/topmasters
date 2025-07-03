@@ -1,29 +1,81 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
-// import ListingSidebar from '@/components/common/ListingSidebar';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import AdvanceFilterModal from '@/components/common/advance-filter-two';
-import TopFilterBar from './TopFilterBar';
-import FeaturedListings from './FeatuerdListings';
-// import PaginationTwo from '@/components/common/PaginationTwo';
 import PropertyCard from '@/components/common/PropertyCard';
 import ListingSidebar from '../../sidebar';
 import PaginationTwo from '../../PaginationTwo';
 
-// If you have a local data file for fallback, you can import it (optional)
-// import listings from "@/data/listings";
+// Error boundary component
+function ErrorFallback({ error, retry }) {
+  return (
+    <div className="container py-5">
+      <div className="row justify-content-center">
+        <div className="col-md-8 text-center">
+          <div className="alert alert-danger">
+            <h4 className="alert-heading">Oops! Something went wrong</h4>
+            <p className="mb-3">
+              We encountered an error while loading projects. This might be a temporary issue.
+            </p>
+            <div className="d-flex gap-3 justify-content-center">
+              <button onClick={retry} className="btn btn-primary">
+                <i className="fas fa-redo me-2"></i>
+                Try Again
+              </button>
+              <a href="/" className="btn btn-outline-secondary">
+                Go Home
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
 
-export default function PropertyFiltering() {
+// Fetch projects with retry mechanism and caching
+async function fetchProjectsWithRetry(retries = 3) {
+  for (let i = 0; i < retries; i++) {
+    try {
+      const res = await fetch(
+        'https://backend.thetopmasters.com/api/v1/projects',
+        {
+          next: {
+            revalidate: 300, // 5 minutes cache
+            tags: ['projects']
+          },
+          headers: {
+            'Accept': 'application/json',
+            'Cache-Control': 'public, s-maxage=300, stale-while-revalidate=600'
+          }
+        }
+      );
+      
+      if (!res.ok) {
+        throw new Error(`API error: ${res.status}`);
+      }
+      
+      const result = await res.json();
+      return result.data || [];
+    } catch (error) {
+      console.error(`Fetch attempt ${i + 1} failed:`, error);
+      if (i === retries - 1) throw error;
+      // Wait before retry (exponential backoff)
+      await new Promise(resolve => setTimeout(resolve, Math.pow(2, i) * 1000));
+    }
+  }
+}
+
+export default function PropertyFiltering({ initialProjects = [], initialError = null }) {
   // States for the fetched projects data
-  const [projects, setProjects] = useState([]);
-  const [loadingProjects, setLoadingProjects] = useState(true);
+  const [projects, setProjects] = useState(initialProjects);
+  const [error, setError] = useState(initialError);
 
   // Filtering and sorting states
   const [filteredData, setFilteredData] = useState([]);
   const [sortedFilteredData, setSortedFilteredData] = useState([]);
   const [currentSortingOption, setCurrentSortingOption] = useState('Newest');
   const [pageNumber, setPageNumber] = useState(1);
-  const [pageItems, setPageItems] = useState([]);
   const [pageContentTrac, setPageContentTrac] = useState([]);
 
   // Filter states
@@ -37,8 +89,8 @@ export default function PropertyFiltering() {
   const [yearBuild, setYearBuild] = useState([0, 2050]);
   const [categories, setCategories] = useState([]);
 
-  // Functions to update filter states
-  const resetFilter = () => {
+  // Memoized filter functions to prevent unnecessary re-renders
+  const resetFilter = useCallback(() => {
     setListingStatus('All');
     setPropertyTypes([]);
     setPriceRange([0, 100000]);
@@ -55,13 +107,13 @@ export default function PropertyFiltering() {
     document.querySelectorAll('.filterSelect').forEach((element) => {
       element.value = 'All Cities';
     });
-  };
+  }, []);
 
-  const handlelistingStatus = (elm) => {
+  const handlelistingStatus = useCallback((elm) => {
     setListingStatus((prev) => (prev === elm ? 'All' : elm));
-  };
+  }, []);
 
-  const handlepropertyTypes = (elm) => {
+  const handlepropertyTypes = useCallback((elm) => {
     if (elm === 'All') {
       setPropertyTypes([]);
     } else {
@@ -69,33 +121,33 @@ export default function PropertyFiltering() {
         prev.includes(elm) ? prev.filter((el) => el !== elm) : [...prev, elm]
       );
     }
-  };
+  }, []);
 
-  const handlepriceRange = (elm) => {
+  const handlepriceRange = useCallback((elm) => {
     setPriceRange(elm);
-  };
+  }, []);
 
-  const handlebedrooms = (elm) => {
+  const handlebedrooms = useCallback((elm) => {
     setBedrooms(elm);
-  };
+  }, []);
 
-  const handlebathroms = (elm) => {
+  const handlebathroms = useCallback((elm) => {
     setBathroms(elm);
-  };
+  }, []);
 
-  const handlelocation = (elm) => {
+  const handlelocation = useCallback((elm) => {
     setLocation(elm);
-  };
+  }, []);
 
-  const handlesquirefeet = (elm) => {
+  const handlesquirefeet = useCallback((elm) => {
     setSquirefeet(elm);
-  };
+  }, []);
 
-  const handleyearBuild = (elm) => {
+  const handleyearBuild = useCallback((elm) => {
     setYearBuild(elm);
-  };
+  }, []);
 
-  const handlecategories = (elm) => {
+  const handlecategories = useCallback((elm) => {
     if (elm === 'All') {
       setCategories([]);
     } else {
@@ -103,9 +155,10 @@ export default function PropertyFiltering() {
         prev.includes(elm) ? prev.filter((el) => el !== elm) : [...prev, elm]
       );
     }
-  };
+  }, []);
 
-  const filterFunctions = {
+  // Memoized filter functions object
+  const filterFunctions = useMemo(() => ({
     handlelistingStatus,
     handlepropertyTypes,
     handlepriceRange,
@@ -126,40 +179,60 @@ export default function PropertyFiltering() {
     yearBuild,
     categories,
     setPropertyTypes,
-  };
+  }), [
+    handlelistingStatus,
+    handlepropertyTypes,
+    handlepriceRange,
+    handlebedrooms,
+    handlebathroms,
+    handlelocation,
+    handlesquirefeet,
+    handleyearBuild,
+    handlecategories,
+    priceRange,
+    listingStatus,
+    propertyTypes,
+    resetFilter,
+    bedrooms,
+    bathroms,
+    location,
+    squirefeet,
+    yearBuild,
+    categories,
+  ]);
 
-  // Fetch projects from the API once on component mount
-  useEffect(() => {
-    async function fetchProjects() {
-      try {
-        const res = await fetch(
-          'https://backend.thetopmasters.com/api/v1/projects',
-          { cache: 'no-store' }
-        );
-        if (!res.ok) {
-          // If the API fails, you can either set projects to an empty array or handle the error
-          console.error('Error fetching projects:', res.status);
-          setProjects([]);
-        } else {
-          const result = await res.json();
-          if (!result.data || (Array.isArray(result.data) && result.data.length === 0)) {
-            setProjects([]);
-          } else {
-            // Assume result.data is an array
-            setProjects(result.data);
-          }
-        }
-      } catch (error) {
-        console.error('Failed to fetch projects:', error);
-        setProjects([]);
-      } finally {
-        setLoadingProjects(false);
-      }
+  // Fetch projects function with error handling
+  const fetchProjects = useCallback(async () => {
+    try {
+      setError(null);
+      const data = await fetchProjectsWithRetry();
+      setProjects(data);
+      setFilteredData(data); // Set initial filtered data
+    } catch (error) {
+      console.error('Failed to fetch projects:', error);
+      setError(error);
+      setProjects([]);
+      setFilteredData([]);
     }
-    fetchProjects();
   }, []);
 
-  // Filtering logic (using listings from fetched API data)
+  // Initial data setup
+  useEffect(() => {
+    if (initialProjects.length > 0) {
+      setProjects(initialProjects);
+      setFilteredData(initialProjects);
+    }
+    if (initialError) {
+      setError(initialError);
+    }
+  }, [initialProjects, initialError]);
+
+  // Update filtered data when projects change (for now, just copy all projects)
+  useEffect(() => {
+    setFilteredData(projects);
+  }, [projects]);
+
+  // Filtering logic (commented out as requested)
   // useEffect(() => {
   //   // Use fetched projects if available, otherwise use empty array.
   //   const refItems = projects.filter((elm) => {
@@ -242,53 +315,56 @@ export default function PropertyFiltering() {
   //   categories,
   // ]);
 
-  // Sorting logic
-  useEffect(() => {
-    setPageNumber(1);
-    let sorted;
-    if (currentSortingOption === 'Newest') {
-      sorted = [...filteredData].sort((a, b) => b.yearBuilding - a.yearBuilding);
-    } else if (currentSortingOption.trim() === 'Price Low') {
-      sorted = [...filteredData].sort(
-        (a, b) =>
-          Number(a.price.split('$')[1].replace(/,/g, '')) -
-          Number(b.price.split('$')[1].replace(/,/g, ''))
-      );
-    } else if (currentSortingOption.trim() === 'Price High') {
-      sorted = [...filteredData].sort(
-        (a, b) =>
-          Number(b.price.split('$')[1].replace(/,/g, '')) -
-          Number(a.price.split('$')[1].replace(/,/g, ''))
-      );
-    } else {
-      sorted = filteredData;
+  // Optimized sorting logic with useMemo
+  const sortedData = useMemo(() => {
+    let sorted = [...filteredData];
+    
+    switch (currentSortingOption) {
+      case 'Newest':
+        sorted.sort((a, b) => new Date(b.created_at || b.updated_at || 0) - new Date(a.created_at || a.updated_at || 0));
+        break;
+      case 'Price Low':
+        sorted.sort((a, b) => (a.start_price || 0) - (b.start_price || 0));
+        break;
+      case 'Price High':
+        sorted.sort((a, b) => (b.start_price || 0) - (a.start_price || 0));
+        break;
+      default:
+        break;
     }
-    setSortedFilteredData(sorted);
+    
+    return sorted;
   }, [filteredData, currentSortingOption]);
 
-  // Pagination effect
+  // Update sorted data when dependencies change
   useEffect(() => {
+    setPageNumber(1);
+    setSortedFilteredData(sortedData);
+  }, [sortedData]);
+
+  // Optimized pagination with useMemo
+  const paginatedData = useMemo(() => {
     const capacity = 9;
-    setPageItems(
-      sortedFilteredData.slice((pageNumber - 1) * capacity, pageNumber * capacity)
-    );
-    setPageContentTrac([
-      (pageNumber - 1) * capacity + 1,
-      pageNumber * capacity,
-      sortedFilteredData.length,
-    ]);
+    const start = (pageNumber - 1) * capacity;
+    const end = pageNumber * capacity;
+    
+    const pageItems = sortedFilteredData.slice(start, end);
+    const contentTrac = [start + 1, Math.min(end, sortedFilteredData.length), sortedFilteredData.length];
+    
+    return { pageItems, contentTrac };
   }, [pageNumber, sortedFilteredData]);
 
-  if (loadingProjects) {
-    return (
-      <div className='container min-vh-100 d-flex align-items-center justify-content-center '>
-        <div className="col-sm-12 col-lg-4 list-title">
-          <p className='list-title'>Loading projects...</p>
-        </div>
-      </div>
-    );
+  // Update page content tracking
+  useEffect(() => {
+    setPageContentTrac(paginatedData.contentTrac);
+  }, [paginatedData.contentTrac]);
+
+  // Error state
+  if (error) {
+    return <ErrorFallback error={error} retry={fetchProjects} />;
   }
 
+  // Show content even if no projects (empty state will be handled in JSX)
   return (
     <section className="pt50 pb90">
       <div className="container">
@@ -301,13 +377,13 @@ export default function PropertyFiltering() {
         >
           <div className="offcanvas-header">
             <h5 className="offcanvas-title" id="listingSidebarFilterLabel">
-              Listing Filter
+              Project Filters
             </h5>
             <button
               type="button"
               className="btn-close text-reset"
               data-bs-dismiss="offcanvas"
-              aria-label="Close"
+              aria-label="Close filter menu"
             ></button>
           </div>
           <div className="offcanvas-body p-0">
@@ -330,29 +406,68 @@ export default function PropertyFiltering() {
         </div>
         {/* End Advance Feature Modal */}
 
+        {/* Projects Header */}
+        <div className="row mb-4">
+          <div className="col-12">
+            <div className="d-flex justify-content-between align-items-center">
+              <div className="list-title">
+                <h4 className="mb-0">
+                  {sortedFilteredData.length > 0 
+                    ? `${sortedFilteredData.length} Projects Found`
+                    : 'No Projects Found'
+                  }
+                </h4>
+                {pageContentTrac.length > 0 && (
+                  <p className="text-muted mb-0">
+                    Showing {pageContentTrac[0]}-{pageContentTrac[1]} of {pageContentTrac[2]} projects
+                  </p>
+                )}
+              </div>
+              
+              {/* Sort Dropdown */}
+              <div className="dropdown">
+                <select 
+                  className="form-select"
+                  value={currentSortingOption}
+                  onChange={(e) => setCurrentSortingOption(e.target.value)}
+                  aria-label="Sort projects"
+                >
+                  <option value="Newest">Newest First</option>
+                  <option value="Price Low">Price: Low to High</option>
+                  <option value="Price High">Price: High to Low</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
         {/* Projects Listing */}
         <div className="row">
-          {projects.length > 0 ? (
-            projects.map((project) => (
-              <div key={project.id} className="col-sm-12 col-lg-4">
+          {/* Only show content after initial data processing */}
+          {
+            paginatedData.pageItems.map((project) => (
+              <div key={project.id} className="col-sm-12 col-lg-4 mb-4">
                 <PropertyCard project={project} />
               </div>
             ))
-          ) : (
-            <p>No projects found.</p>
-          )}
+          }
         </div>
         {/* End Projects Listing */}
 
         {/* Pagination */}
-        <div className="row">
-          <PaginationTwo
-            pageCapacity={9}
-            data={sortedFilteredData}
-            pageNumber={pageNumber}
-            setPageNumber={setPageNumber}
-          />
-        </div>
+        {sortedFilteredData.length > 9 && (
+          <div className="row mt-4">
+            <div className="col-12">
+              <PaginationTwo
+                pageCapacity={9}
+                data={sortedFilteredData}
+                pageNumber={pageNumber}
+                setPageNumber={setPageNumber}
+              />
+            </div>
+          </div>
+        )}
+        {/* End Pagination */}
       </div>
       {/* End container */}
     </section>
