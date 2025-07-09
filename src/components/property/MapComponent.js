@@ -50,7 +50,7 @@ export default function MapComponent({ lat, lng, zoom = 12, markerTitle }) {
     if (window.google) {
       initializeMap();
     }
-  }, [lat, lng, zoom, markerTitle]);
+  }, [lat, lng, zoom, markerTitle, initializeMap]);
 
   return (
     <>

@@ -8,6 +8,7 @@ import DefaultHeader from "@/components/common/DefaultHeader";
 import Footer from "@/components/common/default-footer";
 import MobileMenu from "@/components/common/mobile-menu";
 import EnquiryForm from "@/components/common/enquiry-form";
+import Link from 'next/link';
 
 // Lazy load heavy components
 const NearbySimilarProperty = dynamic(() => import('@/components/property/property-single-style/common/NearbySimilarProperty'));
@@ -54,7 +55,10 @@ async function fetchProjectData(id) {
 // Enhanced metadata generation
 export async function generateMetadata({ params }) {
   try {
-    const { id } = params;
+
+    const resolvedParams = await params;
+    const id = resolvedParams.id;
+     
     const projectData = await fetchProjectData(id);
 
     const title = projectData?.Full?.meta_data?.title || `${projectData?.Full?.name} by ${projectData?.Full?.developer_name}`;
@@ -200,9 +204,9 @@ function ProjectError({ error }) {
           </p>
           <div className="d-flex gap-3 justify-content-center">
             <a href="/" className="btn btn-primary">Go Home</a>
-            <a href="/projects" className="btn btn-outline-secondary">
+            <Link href="/projects" className="btn btn-outline-secondary">
               View All Projects
-            </a>
+            </Link>
           </div>
         </div>
       </div>
@@ -212,7 +216,9 @@ function ProjectError({ error }) {
 
 // Main component
 export default async function ProjectV1({ params }) {
-  const { id } = params;
+
+  const resolvedParams = await params;
+  const id = resolvedParams.id;
 
   try {
     const projectData = await fetchProjectData(id);

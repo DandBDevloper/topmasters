@@ -21,8 +21,9 @@ const ExploreCities = () => {
 
         const mapped = areas.map(a => ({
           id: a.id,
+          slug: a.slug,
           name: a.name,
-          image: a.img_url,                  // already a full `/storage/...` URL
+          image: a.thumb_url,                  // already a full `/storage/...` URL
           number: a.count_properties || 0,    // whatever numeric field
         }));
 
@@ -76,7 +77,7 @@ const ExploreCities = () => {
         {cities.map((city) => (
           <SwiperSlide key={city.id}>
             <div className="item">
-              <Link href={`area/${city.id}`}>
+              <Link href={`areas/${city.slug}`}>
                 <div className="feature-style2 mb30">
                   <div className="feature-img HomeAreaImg">
                     <Image

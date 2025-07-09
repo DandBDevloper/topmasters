@@ -45,7 +45,7 @@ const PropertyCard = ({project}) => {
                   </div>
                   <hr className="mt-2 mb-2" />
                   <div className="list-meta2 d-flex justify-content-between align-items-center">
-                  <Link href={`/projects/${project.slug}`} className="ud-btn btn-thm3">
+                  <Link href={`/projects/${project.slug}`} className="ud-btn btn-thm3" onClick={() => console.log('Navigating to:', `/projects/${project.slug}`)}>
                     Discover
                     <i className="fal fa-arrow-right-long" />
                     </Link>

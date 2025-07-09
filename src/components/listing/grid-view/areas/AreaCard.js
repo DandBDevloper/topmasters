@@ -16,8 +16,8 @@ export default function AreaCard({ area }) {
 
   // Get fallback image
   const getImageSrc = () => {
-    if (area.img_url) return area.img_url;
-    return '/images/default-area.jpg'; // Fallback image
+    if (area.thumb_url) return area.thumb_url;
+    return '/images/empty.webp'; // Fallback image
   };
 
   return (
@@ -30,7 +30,7 @@ export default function AreaCard({ area }) {
           src={getImageSrc()}
           alt={area.name}
           onError={(e) => {
-            e.target.src = '/images/default-area.jpg';
+            e.target.src = '/images/empty.webp';
           }}
         />
       </div>
@@ -43,7 +43,7 @@ export default function AreaCard({ area }) {
         </div> */}
         
         <h6 className="list-title">
-          <Link href={`/areas/${area.id}`}>
+          <Link href={`/areas/${area.slug}`}>
             {area.name}
           </Link>
         </h6>
@@ -64,7 +64,7 @@ export default function AreaCard({ area }) {
             </span>
           </div>
           
-          <Link href={`/areas/${area.id}`} className="btn btn-sm ">
+          <Link href={`/areas/${area.slug}`} className="btn btn-sm ">
             View Details
           </Link>
         </div>
