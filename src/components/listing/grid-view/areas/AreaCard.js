@@ -29,9 +29,6 @@ export default function AreaCard({ area }) {
           className="w-100 cover"
           src={getImageSrc()}
           alt={area.name}
-          onError={(e) => {
-            e.target.src = '/images/empty.webp';
-          }}
         />
       </div>
       
