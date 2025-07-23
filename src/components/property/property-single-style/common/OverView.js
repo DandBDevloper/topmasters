@@ -57,7 +57,7 @@ const OverView = ({amenities}) => {
               className="icon projectAmenitiesIcon"  // your custom styling
             />
             <div className="ml15">
-              <h6 className="mb-0">{item.name}</h6>
+              <h6 className="mb-0">{item.amenity_name}</h6>
               {/* <p className="text mb-0 fz15">{item.value}</p> */}
             </div>
           </div>

@@ -168,7 +168,8 @@ function OptimizedImage({
   width, 
   height, 
   priority = false,
-  sizes = "(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+  sizes = "(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw",
+  objectFit = "contain"
 }) {
   if (!src) return <div className={`${className} bg-gray-200 animate-pulse`}></div>;
 
@@ -187,6 +188,7 @@ function OptimizedImage({
       quality={85}
       placeholder="blur"
       blurDataURL={blurDataURL}
+      objectFit={objectFit}
     />
   );
 }
@@ -344,6 +346,7 @@ export default async function ProjectV1({ params }) {
                     alt={`Featured view of ${projectName}`}
                     fill
                     className="imgRounded"
+                    objectFit="cover"
                     priority
                   />
                 </div>
@@ -365,9 +368,9 @@ export default async function ProjectV1({ params }) {
           <div className="bgc-f7 customPaddingProject">
             <div className="container">
               <div className="overflow-hidden position-relative">
-                <h4 className="title fz17 mb30">
+                <h2 className=" mb30">
                   {safeGet(projectData, 'Banner.project_name', projectName)} Amenities
-                </h4>
+                </h2>
                 <div className="row">
                   <OverView amenities={amenities} />
                 </div>
@@ -381,7 +384,7 @@ export default async function ProjectV1({ params }) {
           <div className="">
             <div className="container customPaddingProjectGallery">
               <div className="row">
-                <div className="col-12 col-md-6 d-flex align-items-center">
+                <div className="col-12 col-md-6 d-flex align-items-center mb-4 md-mb-0">
                   <MapComponent
                     lat={location.lat}
                     lng={location.lng}
@@ -389,6 +392,9 @@ export default async function ProjectV1({ params }) {
                   />
                 </div>
                 <div className="col-12 col-md-6 color-white d-flex cntLocationSec flex-column justify-content-center align-items-center">
+                  <div>
+                    <h2>{projectData.Full.address}</h2>
+                  </div>
                   {safeGet(projectData, 'Full.address_description') && (
                     <div dangerouslySetInnerHTML={{
                       __html: projectData.Full.address_description

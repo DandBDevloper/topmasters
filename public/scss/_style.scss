@@ -10694,7 +10694,8 @@ input:focus-visible {
     height: 100%;
 
     h2 {
-        font-size: 3rem;
+        font-size: clamp(1.75rem, 5vw, 3rem);
+        line-height: 1.2; // Good practice for large text
     }
 }
 
@@ -10743,7 +10744,6 @@ input:focus-visible {
 
     h3 {
         color: var(--primary-backround-color) !important;
-        font-size: 2rem;
     }
 }
 
@@ -10787,7 +10787,7 @@ input:focus-visible {
     @media (min-width: 1024px) {
         grid-template-columns: repeat(2, 1fr);
         grid-template-rows: 1fr;
-        grid-column-gapgap: 10px;
+        grid-column-gap: 10px;
     }
     
 }
