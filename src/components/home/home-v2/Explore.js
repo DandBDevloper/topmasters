@@ -39,10 +39,10 @@ const Explore = () => {
             <div className="iconbox-content">
               <h4 className="title">{item.title}</h4>
               <p className="text">{item.text}</p>
-              <a href="#" className="ud-btn btn-thm3">
+              {/* <a href="#" className="ud-btn btn-thm3">
                 {item.linkText}
                 <i className="fal fa-arrow-right-long" />
-              </a>
+              </a> */}
             </div>
           </div>
         </div>

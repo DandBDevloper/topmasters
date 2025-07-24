@@ -18,10 +18,6 @@ import Link from "next/link";
 import HeaderNav from "@/components/home/home-v2/HeaderNav";
 import Blog from "@/components/common/Blog";
 
-export const metadata = {
-  title: "The Top Master",
-};
-
 const Home_V2 = () => {
   return (
     <>

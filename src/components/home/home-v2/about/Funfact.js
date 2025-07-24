@@ -53,9 +53,9 @@ const Funfact = () => {
                 ))}
               </ul>
             </div>
-            <Link href="/grid-gull-3-col" className="ud-btn btn-white2">
+            {/* <Link href="/grid-gull-3-col" className="ud-btn btn-white2">
               Download Market Report<i className="fal fa-arrow-right-long"></i>
-            </Link>
+            </Link> */}
           </div>
         {/* </div> */}
       {/* <Link href="#" className="ud-btn btn-thm">
