@@ -1,0 +1,122 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f3f4f6;
+    padding: 1rem;
+    }
+    
+    .card {
+    position: relative;
+    width: 100%;
+    max-width: 80rem; /* Adjusted for better responsiveness /
+    height: 16rem; / Adjusted height for desktop */
+    border-radius: 1.5rem;
+    overflow: hidden;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    }
+    
+    @media (min-width: 768px) {
+    .card {
+    height: 20rem; /* Adjusted height for medium screens */
+    }
+    }
+    
+    @media (min-width: 1024px) {
+    .card {
+    height: 24rem; /* Adjusted height for large screens */
+    }
+    }
+    
+    .gradientOverlay {
+    position: absolute;
+    inset: 0;
+    background-image: linear-gradient(to right, rgba(220, 38, 38, 0.9), rgba(220, 38, 38, 0));
+    opacity: 0.9;
+    z-index: 1; /* Ensure this is on top of the image but below the text */
+    }
+    
+    .backgroundImage {
+    position: absolute;
+    inset: 0;
+    }
+    
+    .image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    }
+    
+    .content {
+    position: relative;
+    padding: 1.5rem 2.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    height: 100%;
+    color: white;
+    z-index: 2; /* Ensure content is on top of everything */
+    }
+    
+    .title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    letter-spacing: 0.05em;
+    font-family: 'Inter', sans-serif;
+    }
+    
+    @media (min-width: 768px) {
+    .title {
+    font-size: 2.25rem;
+    }
+    }
+    
+    .line {
+    width: 40%;
+    max-width: 25rem;
+    border-top: 2px solid white;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    }
+    
+    .subtitle {
+    font-size: 0.875rem;
+    margin-bottom: 1rem;
+    font-family: 'Inter', sans-serif;
+    }
+    
+    @media (min-width: 768px) {
+    .subtitle {
+    font-size: 1.125rem;
+    }
+    }
+    
+    .button {
+    padding: 0.5rem 1.5rem;
+    border-radius: 9999px;
+    background-color: white;
+    color: #dc2626;
+    font-weight: 600;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    transition-property: background-color;
+    transition-duration: 300ms;
+    font-family: 'Inter', sans-serif;
+    border: none;
+    }
+    
+    .button:hover {
+    background-color: #e5e7eb;
+    }
+    
+    @media (min-width: 768px) {
+    .button {
+    padding: 0.75rem 2rem;
+    font-size: 0.875rem;
+    }
+    }

@@ -1,0 +1,129 @@
+// Variables for easy customization
+$primary-text-color: #111827;
+$secondary-text-color: #4b5563;
+$border-color: #e5e7eb;
+$transition-speed: 0.3s;
+
+.faqContainer {
+  width: 100%;
+  margin: 0 auto;
+}
+
+.faqItem {
+  border-bottom: 1px solid $border-color;
+}
+
+.faqQuestion {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  text-align: left;
+  padding: 1.25rem 0rem;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 1.125rem; /* 18px */
+  font-weight: 600;
+  color: $primary-text-color;
+}
+
+.questionText {
+  padding-right: 1rem;
+}
+
+.faqIcon {
+  font-size: 1.5rem; /* 24px */
+  font-weight: 400;
+  color: $secondary-text-color;
+  transition: transform $transition-speed ease;
+}
+
+// Container for the answer to animate height smoothly
+.faqAnswerContainer {
+  display: grid;
+  grid-template-rows: 0fr; // Initially closed
+  transition: grid-template-rows $transition-speed ease-in-out;
+
+  // State when open
+  &[data-state='open'] {
+    grid-template-rows: 1fr;
+  }
+}
+
+.faqAnswer {
+  overflow: hidden; // Necessary for the grid animation to work
+//   padding: 0 0.5rem 1.25rem;
+  color: $secondary-text-color;
+  line-height: 1.6;
+  font-size: 1rem;
+
+  // Allows for rich text formatting inside the answer
+  p {
+    margin: 0;
+  }
+  a {
+    color: #0070f3;
+    text-decoration: underline;
+  }
+}
+
+// --- Responsive Design ---
+@media (max-width: 640px) {
+  .faqQuestion {
+    font-size: 1rem; /* 16px */
+    padding: 1rem 0.25rem;
+  }
+  .faqAnswer {
+    font-size: 0.95rem;
+  }
+}
+
+.faqAnswerContainer {
+    display: grid;
+    grid-template-rows: 0fr; // Initially closed
+    transition: grid-template-rows 0.3s ease-in-out;
+  
+    // State when open
+    &[data-state='open'] {
+      grid-template-rows: 1fr;
+    }
+  }
+  
+  // This wrapper's only job is to hide the overflow. No padding here!
+  .faqAnswer {
+    overflow: hidden;
+  }
+  
+  // This new class holds the content and its padding.
+  .faqAnswerContent {
+    // padding: 0 0.5rem 1.25rem;
+    color: $secondary-text-color;
+    line-height: 1.6;
+    font-size: 1rem;
+  
+    // This will now style the HTML tags from your rich text
+    p {
+      margin-top: 0;
+      margin-bottom: 1rem;
+    }
+    strong {
+      font-weight: 600;
+      color: $primary-text-color;
+    }
+    a {
+      color: #0070f3;
+      text-decoration: underline;
+    }
+  }
+  
+  // --- Responsive Design ---
+  @media (max-width: 640px) {
+    .faqQuestion {
+      font-size: 1rem; /* 16px */
+      padding: 1rem 0.25rem;
+    }
+    .faqAnswerContent { // Adjusted to target the new class
+      font-size: 0.95rem;
+    }
+  }

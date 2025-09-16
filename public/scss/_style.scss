@@ -10856,3 +10856,46 @@ input:focus-visible {
 //         z-index: 2;
 //     }
 // }
+
+/* Styling for react-phone-number-input */
+
+/* This is the main container that will now act as our 'form-control' */
+.phone-input-container {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ced4da; /* Standard Bootstrap border color */
+    border-radius: 0.375rem;   /* Standard Bootstrap border-radius */
+    padding: 0.375rem 0.75rem; /* Standard Bootstrap padding */
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    background-color: #fff;
+  }
+  
+  /* Add a blue focus ring, just like Bootstrap */
+  .phone-input-container:focus-within {
+    border-color: #86b7fe;
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+  }
+  
+  /* Style for when there is a validation error */
+  .phone-input-container.is-invalid {
+    border-color: #dc3545; /* Bootstrap's danger color */
+  }
+  .phone-input-container.is-invalid:focus-within {
+    border-color: #dc3545;
+    box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.25);
+  }
+  
+  /* Target the country select dropdown */
+  .PhoneInputCountry {
+    margin-right: 10px;
+  }
+  
+  /* This is the crucial part: style the actual input field */
+  .PhoneInputInput {
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    flex: 1; /* Allows the input to take up the remaining space */
+    background-color: transparent;
+  }

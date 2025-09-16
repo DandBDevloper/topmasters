@@ -6,9 +6,12 @@ import Image from "next/image";
 import { notFound } from 'next/navigation';
 import DefaultHeader from "@/components/common/DefaultHeader";
 import Footer from "@/components/common/default-footer";
+import Faq from '@/components/common/Faq';
 import MobileMenu from "@/components/common/mobile-menu";
 import EnquiryForm from "@/components/common/enquiry-form";
+import Form from "@/components/common/form";
 import Link from 'next/link';
+import DownloadEnquire from '@/components/property/property-single-style/common/DownloadEnquire';
 
 // Lazy load heavy components
 const NearbySimilarProperty = dynamic(() => import('@/components/property/property-single-style/common/NearbySimilarProperty'));
@@ -17,6 +20,7 @@ const PropertyGallery = dynamic(() => import('@/components/property/property-sin
 const ProjectHero = dynamic(() => import('@/components/property/property-single-style/common/ProjectHero'));
 const DownloadBrochure = dynamic(() => import('@/components/property/property-single-style/common/DownlaodBrochure'));
 const MapComponent = dynamic(() => import('@/components/property/MapComponent'));
+// const Faq = dynamic(() => import('@/components/common/Faq'));
 
 // Enhanced fetch function with better error handling and caching
 async function fetchProjectData(id) {
@@ -236,6 +240,7 @@ export default async function ProjectV1({ params }) {
     const payments = safeGet(projectData, 'Payments', []);
     const nearbyAreas = safeGet(projectData, 'Full.project_nearby_areas', []);
     const location = safeGet(projectData, 'Location', {});
+    const faqs = safeGet(projectData, 'Full.faqs', []);
 
     return (
       <>
@@ -334,6 +339,10 @@ export default async function ProjectV1({ params }) {
             </div>
           </div>
         )}
+
+        {/* <div>
+          <DownloadEnquire />
+        </div> */}
 
         {/* Featured Section */}
         {images.length > 1 && (
@@ -447,8 +456,39 @@ export default async function ProjectV1({ params }) {
           <DownloadBrochure />
         </div>
 
+
+
+        {/* Faqs Section */}
+        {faqs.length >= 1 && (
+          <div className="customPaddingProject container">
+            <h2 className='mb-4'>{projectName} Frequently Asked Questions</h2>
+            <Faq faqs={faqs} />
+          </div>
+        )}
+
+        <section className='bgc-f7'>
+          <div className="container ">
+            {/* Use a row to create a flex container */}
+            <div className="row align-items-center">
+              
+              {/* Column 1: The Text */}
+              <div className="col-lg-6 mb-4 mb-lg-0">
+                <h2 className=''>Fill the form below to get more information</h2>
+                {/* You can add more text or a description here if needed */}
+                <p className="lead">We'll get back to you as soon as possible with all the details.</p>
+              </div>
+
+              {/* Column 2: The Form */}
+              <div className="col-lg-6">
+                <Form title="Get More Information" />
+              </div>
+
+            </div>
+          </div>
+</section>
+
         {/* Similar Properties Section */}
-        <section>
+        {/* <section>
           <div className="container">
             <div className="row">
               <div className="col-lg-12">
@@ -458,7 +498,7 @@ export default async function ProjectV1({ params }) {
               </div>
             </div>
           </div>
-        </section>
+        </section> */}
 
         {/* Footer */}
         <section className="footer-style1 pt60 pb-0">
