@@ -475,7 +475,7 @@ export default async function ProjectV1({ params }) {
               <div className="col-lg-6 mb-4 mb-lg-0">
                 <h2 className=''>Fill the form below to get more information</h2>
                 {/* You can add more text or a description here if needed */}
-                <p className="lead">We'll get back to you as soon as possible with all the details.</p>
+                <p className="lead">We&apos;ll get back to you as soon as possible with all the details.</p>
               </div>
 
               {/* Column 2: The Form */}
